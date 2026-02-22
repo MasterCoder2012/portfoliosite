@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+        <!--<link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="icon" href="https://gyazo.com/a4abc5fdb965d1b97db38453012efc73/thumb/1000" type="image/x-icon">
+        <title>Unofficial Minecraft Site</title>
+       <script>
+/* === EMBED-SAFE COOKIE BANNER + LOGGING === */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const consent = localStorage.getItem("cookie_consent");
+
+    // Only show banner if no previous decision
+    if (!consent) {
+        // Create translucent overlay
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "9999";
+
+        // Create card
+        const card = document.createElement("div");
+        card.style.background = "#fff";
+        card.style.color = "#111";
+        card.style.padding = "30px";
+        card.style.borderRadius = "12px";
+        card.style.maxWidth = "480px";
+        card.style.textAlign = "center";
+        card.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
+        card.innerHTML = `
+            <h2>Cookies</h2>
+            <p>This site uses cookies for basic analytics.</p>
+            <div style="margin-top:20px;">
+                <button id="acceptBtn" style="margin-right:12px;padding:10px 20px;">Accept</button>
+                <button id="rejectBtn" style="padding:10px 20px;">Reject</button>
+            </div>
+        `;
+
+        overlay.appendChild(card);
+        document.body.appendChild(overlay);
+
+        // Accept button
+        document.getElementById("acceptBtn").onclick = function() {
+            localStorage.setItem("cookie_consent", "yes");
+            overlay.remove();
+
+            // Send log to log.php
+            fetch("/log.php", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    page: location.pathname,
+                    consent: "yes"
+                })
+            });
+        };
+
+        // Reject button
+        document.getElementById("rejectBtn").onclick = function() {
+            // Do NOT save consent → banner returns next visit
+            overlay.remove();
+        };
+    }
+
+    // Optional: auto-log if already accepted
+    if (consent === "yes") {
+        fetch("/log.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                page: location.pathname,
+                consent: "yes"
+            })
+        });
+    }
+
+});
+</script>
+
+ 
+
+        <style>
+            .centeredText{
+                text-align: center;
+                margin:auto;
+                color: black;
+            }
+            table, th, td{
+                border: 1pt solid #70B237;
+                color: #70B237;
+            }
+            th, td{
+                background-color: #1D1C21;
+            }
+            .text{
+                color: #70B237;
+            }
+            @font-face {
+                font-family: Minecraft;
+                src: url('mojangles.otf.woff2') format('woff2'),
+            }
+        </style>
+
+        <script>
+            
+            let chatShowing = false;
+            let chat;
+            window.onload = () => {
+                chat = document.getElementById("chat");
+            };
+
+            const unhelpfulAnswers = [
+                "Not sure yet.",
+                "I don’t know, sorry.",
+                "I’m a bit lost on this one.",
+                "No idea right now.",
+                "I haven’t figured that out."
+            ];
+
+
+            const textEasterEggs = {
+                "are you perplexed?": "No, I am not perplexed.",
+                "are you broken?": "No. This is expected behavior.",
+                "are you stupid?": "Not intentionally.",
+                "are you okay?": "Define okay.",
+                "are you real?": "Legally, yes.",
+                "are you smart?": "On paper only.",
+                "are you working?": "Technically.",
+                "are you supposed to do that?": "Absolutely not.",
+                "are you malfunctioning?": "I prefer the term \"expressive.\"",
+                "are you useless?": "That feels personal.",
+                "hello": "Hello Buddy",
+                "are you dumb?": "No. I'm Perplexed."
+            };
+
+            const memes = [
+                `<img src="https://th.bing.com/th/id/R.38df00d6fb3c84505f54aca90540247f?rik=FsvyCTN5wXQp9w&pid=ImgRaw&r=0" style="width:100%;">`,
+                `<img src="https://i.pinimg.com/originals/74/60/93/746093db1866d4a72bb98a7ee7516dc7.jpg" style="width:100%;">`,
+                `<img src="https://tse2.mm.bing.net/th/id/OIP.fy7UgGTsP9hBY2AA3SNxUgHaEK?cb=defcache2defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3" style="width:100%;">`
+            ];
+        function chatToggle(){
+            if (chatShowing == false){
+                document.getElementById("notch-ai").style.display = "block";
+                chatShowing = true;
+            }
+            else{
+                document.getElementById("notch-ai").style.display = "none";
+                chatShowing = false;
+            }
+        }
+        function submit() {
+        let input = document.getElementById("textbox").value.trim();
+        if (!input) return;
+
+        let lowerInput = input.toLowerCase();
+
+        let wrapper = document.createElement("div");
+        wrapper.style.display = "flex";
+        wrapper.style.justifyContent = "flex-end";
+        wrapper.style.margin = "6px 0";
+
+        let userMessage = document.createElement("div");
+        userMessage.className = "user-bubble";
+        userMessage.style.maxWidth = "75%";
+        userMessage.style.padding = "6pt";
+        userMessage.style.backgroundColor = "#d3d3d3";
+        userMessage.style.borderRadius = "12px";
+        userMessage.style.textAlign = "right";
+        userMessage.textContent = input;
+
+        wrapper.appendChild(userMessage);
+        chat.appendChild(wrapper);
+
+        let aiWrapper = document.createElement("div");
+        aiWrapper.style.display = "flex";
+        aiWrapper.style.justifyContent = "flex-start";
+        aiWrapper.style.margin = "6px 0";
+
+        let aiMessage = document.createElement("div");
+        aiMessage.className = "ai-bubble";
+        aiMessage.style.maxWidth = "75%";
+        aiMessage.style.padding = "6pt";
+        aiMessage.style.backgroundColor = "#333";
+        aiMessage.style.color = "green";
+        aiMessage.style.borderRadius = "12px";
+        aiMessage.style.textAlign = "left";
+
+        if (lowerInput in textEasterEggs) {
+            aiMessage.innerHTML = textEasterEggs[lowerInput];
+        } else if (lowerInput.includes("ethan")) {
+          aiMessage.textContent = "Ethan Scaria is the supreme Lord of Maths.";
+        } else if (lowerInput.includes("copyright")) {
+          aiMessage.innerHTML = `<ol><li>&copy; Abhir Rao</li><li>Thanks to Ethan for encouraging me to do this</li></ol>`;
+        } else if (lowerInput.includes("mounts")) {
+          aiMessage.innerText = "Mounts are awesome! Zombies, pigs, horses… which one do you like?";
+        } else if (lowerInput.includes("spear")) {
+          aiMessage.innerText = "The spear has two attacks: Lunge and Dash. Timing is everything!";
+        } else if (lowerInput.includes("zombie")) {
+          aiMessage.innerText = "Zombie mobs are super aggressive now. Watch out for the Zombie Horse!";
+        } else if (lowerInput.includes("elytra")) {
+          aiMessage.innerText = "Flying with Elytra plus a spear dash is pure chaos!";
+        } else if (lowerInput.includes("pig")) {
+          aiMessage.innerText = "Pig riders are ridiculous, but somehow fun to try anyway.";
+        } else if (lowerInput.includes("creeper")) {
+          aiMessage.innerText = "Creepers are sneaky! One wrong step and boom 💥";
+        } else if (lowerInput.includes("nether")) {
+          aiMessage.innerText = "The Nether is dangerous—bring a fire-resistant potion!";
+        } else if (lowerInput.includes("enderman")) {
+          aiMessage.innerText = "Endermen teleport all over the place. Don’t stare!";
+        } else if (lowerInput.includes("diamond")) {
+          aiMessage.innerText = "Diamonds are rare but worth the hunt. Fortune pickaxe helps!";
+        } else if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
+          aiMessage.innerText = "Hey there! Ready for some Minecraft chaos?";
+        } else if (lowerInput.includes("bye") || lowerInput.includes("goodbye")) {
+          aiMessage.innerText = "No escaping me that easily!";
+        } else if (lowerInput.includes("meme")) {
+          aiMessage.innerHTML = memes[Math.floor(Math.random() * memes.length)];
+        } else if (lowerInput.includes("redstone")) {
+          aiMessage.innerText = "Redstone contraptions can get really crazy. Traps or doors, your choice!";
+        } else if (lowerInput.includes("villager")) {
+          aiMessage.innerText = "Villagers love trading. Just don’t anger a nitwit!";
+        } else if (lowerInput.includes("potion")) {
+          aiMessage.innerText = "Potions can turn the tide. Splash potions are chaotic fun!";
+        }
+        else if (lowerInput.includes("beacon")) {
+          aiMessage.innerText = "Beacons give powerful buffs. Nothing beats speed II with Haste!";
+        } else if (lowerInput.includes("shulker")) {
+          aiMessage.innerText = "Shulkers are tricky. Watch out for their levitation attacks!";
+        } else if (lowerInput.includes("trident")) {
+          aiMessage.innerText = "Tridents are OP in water. Loyalty or Riptide makes all the difference!";
+        } else if (lowerInput.includes("warden")) {
+          aiMessage.innerText = "The Warden? Don’t even try to fight it without a plan. Just run!";
+        } else if (lowerInput.includes("phantom")) {
+          aiMessage.innerText = "Phantoms hate you if you skip sleep. Bring a bow and some patience!";
+        } else if (lowerInput.includes("slime")) {
+          aiMessage.innerText = "Slimes bounce around unpredictably. Useful for farms if you’re clever!";
+        } else if (lowerInput.includes("ender_chest")) {
+          aiMessage.innerText = "Ender Chests are perfect for keeping your valuables safe anywhere!";
+        } else if (lowerInput.includes("netherite")) {
+          aiMessage.innerText = "Netherite gear is the ultimate flex. Make sure you have a good smithing setup!";
+        } else if (lowerInput.includes("alloy")) {
+          aiMessage.innerText = "Alloys like copper or bronze are fun for mods. Minecraft engineering vibes!";
+        } else if (lowerInput.includes("special prompts")) {
+          aiMessage.innerHTML = `
+        <ul>
+            <li>ethan</li>
+            <li>copyright</li>
+            <li>mounts</li>
+            <li>spear</li>
+            <li>zombie</li>
+            <li>elytra</li>
+            <li>pig</li>
+            <li>creeper</li>
+            <li>nether</li>
+            <li>enderman</li>
+            <li>diamond</li>
+            <li>redstone</li>
+            <li>villager</li>
+            <li>potion</li>
+            <li>beacon</li>
+            <li>shulker</li>
+            <li>trident</li>
+            <li>warden</li>
+            <li>phantom</li>
+            <li>slime</li>
+            <li>ender_chest</li>
+            <li>netherite</li>
+            <li>alloy</li>
+          </ul>
+    `;
+        }
+
+
+        else {
+            aiMessage.innerHTML = unhelpfulAnswers[Math.floor(Math.random() * unhelpfulAnswers.length)];
+        }
+
+        aiWrapper.appendChild(aiMessage);
+        chat.appendChild(aiWrapper);
+
+        chat.scrollTop = chat.scrollHeight;
+        document.getElementById("textbox").value = "";
+    }
+
+
+        </script>
+    </head>
+
+    <body style="background-color:#1D1C21;font-family:Minecraft;" class="w3-mobile">
+
+    <div id="notch-ai" style="
+        position: fixed;
+        right: 16px;
+        bottom: 50pt;
+        width: 320px;
+        height: 480px;
+        background-color: #1D1C21;
+        border-radius: 12px;
+        overflow: hidden;
+        z-index: 9999;
+        display: none;
+        border: 1pt solid white;
+        max-width: calc(100%-32pt) !important;
+    ">
+
+        <header style="
+            height: 60px;
+            background: #70B237;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
+            <strong>NOTCH AI</strong>
+        </header>
+
+        <div id="chat" style="
+            height: calc(100% - 120px);
+            overflow-y: auto;
+            padding: 10px;
+        "></div>
+
+        <div style="
+            height: 60px;
+            background: #70B237;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px;
+        ">
+            <input id="textbox"
+                class="w3-input w3-round-xxlarge"
+                style="width:80%;
+                background-color: aliceblue;"
+                onkeydown="if(event.key==='Enter') submit();">
+
+            <div class="w3-button w3-round-large"
+                style="background:black ;color:white;"
+                onclick="submit()">
+                <i class="fa-solid fa-arrow-up"></i>
+            </div>
+        </div>
+    </div>
+    <div style = " background-color: #70B237; position:fixed; right: 5pt; bottom: 5pt; height: 30pt; margin: 5pt; border: 1pt solid white;" onclick="chatToggle()" class = "w3-button w3-round-large">Notch AI</div>
+            <div style ="position: sticky;">
+                <nav style = "text-align:center; " class = "w3-blue"><a class = "w3-button" href = "index.html" style = "color:white; width:100%;">Home</a></a></nav>
+                <h1 style ="background-color: #70B237;font-family: Minecraft;text-align: center; font-size: 50pt; margin-top: 0px;" class = "w3-container w3-hide-small"><u>Minecraft</u></h1>
+                <h1 style ="background-color: #70B237;font-family: Minecraft, monospace;text-align: center; font-size: 40pt; margin-top: 0px;" class = "w3-container w3-hide-large w3-hide-medium"><u>Minecraft</u></h1>        
+            </div>
+            <marquee style ="text-align: center; font-size: medium; background-color: #70B237 ; padding:10pt; color: black;" class="text">Mounts of Mayhem is the latest mc game drop.</marquee>
+            <ul class="w3-center"  class="text">
+                <li class="text w3-center">Mounts of Mayhem features new weapons, new mobs and more</li>
+                <li class="text w3-center">The Game Drop adds the Spear, a new weapon with multiple attack modes and speed-based damage calculations</li>
+            </ul>
+            <div class = "w3-row">
+                    <img src = "https://staticg.sportskeeda.com/editor/2025/10/1d7a5-17600249065350-1920.jpg" class = "w3-half"/>
+                <div class = "w3-half w3-container">
+                    <div  style = "color: #70B237;" >
+                        <p class = "w3-container">
+                            The spear is minecraft's newest weapon, featuring 2 different attacks:<br/>
+                            <ul style = "color: #70B237;">
+                                <li>The Lunge Attack</li>
+                                <li>The Dash Attack</li>
+                            </ul>
+                            The Lunge attack is activated by the attack button, and has a range of 2-4.5 blocks
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class = "w3-row">
+                <div class = "w3-half" style = "display: flex; align-items: center; justify-content: center; background-color: #1D1C21;">
+                    <div>    
+                        <table class = "w3-half" style = "background-color: #70B237;">
+                            <tr>
+                                <th>Material</th>
+                                <th>Jab Damage (hearts)</th>
+                            </tr>
+                            <tr>
+                                <td>Wood</td>
+                                <td>0.5</td>
+                            </tr>
+                            <tr>
+                                <td>Gold</td>
+                                <td>0.5</td>
+                            </tr>
+                            <tr>
+                                <td>Stone</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Copper</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Iron</td>
+                                <td>1.5</td>
+                            </tr>
+                            <tr>
+                                <td>Diamond</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Netherite</td>
+                                <td>2.5</td>
+                            </tr>
+                        </table>
+                    </div>    
+                </div>   
+                <div class = "w3-half w3-container text">
+                    <p>The adjoining table shows the damage dealt by the jab attack from the minecraft spear. As you can see, there are 4 tiers of damage</p>
+                </div>
+            </div>
+                <h1 style="font-family: Minecraft; color: #70B237; text-align: center;">New Hostile Mounts!</h1>
+
+                <div class="w3-row">
+                    <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/MCV_MoM_CharacterCards_Editorial_Body_01_larger.jpg" class="w3-half"/>
+
+                    <div class="w3-half w3-container" style="color: #70B237;">
+                        <h2 style="font-family: Minecraft;">The Zombie Horse</h2>
+                        <p>
+                            The Zombie Horse is now loose in Survival mode — and it’s absolutely not messing around.<br>
+                            This terrifying new unit spawns already mounted by a spear-wielding zombie, instantly turning it into a fast, hostile roaming threat you cannot ignore.<br>
+                            The rider is ultra-aggressive, constantly hunting players and unleashing a brutal dash attack that deals MASSIVE damage on impact.<br>
+                            If that dash lands, expect your health bar to evaporate.<br>
+                            Pair that with the Zombie Horse’s insane speed and mobility, and you’ve got an enemy that can close gaps in seconds, break formations, and delete anyone caught slipping.<br>
+                            It excels at ambushes, chasing fleeing players, and punishing bad positioning.<br>
+                        </p>
+
+                        <h2 style="font-family: Minecraft;">The Zombie Nautilus</h2>
+                        <p>
+                            The Drowned have a brand-new way to make waves!<br>
+                            Now wielding tridents, these fearsome mobs ride the Zombie Nautilus as they glide silently through oceans, patrolling the deep waters with deadly intent.<br>
+                            This combination of rider and mount makes them faster, more unpredictable, and far more dangerous than ever before.<br>
+                            Their patrols are relentless, and they can ambush unsuspecting players who wander too close to their watery domain.<br>
+                            Defeat the drowned rider to break their control over the Nautilus — but be warned, it won’t go down easily.<br>
+                            Once freed, you can claim the Nautilus for yourself, adding a powerful new mount to your arsenal and dominating the seas.<br>
+                            Mastering the Zombie Nautilus opens up tactical advantages, allowing you to traverse the oceans swiftly while keeping enemies on edge.<br>
+                            Underestimate this duo, and you’ll quickly find yourself outmatched in the deep.<br>
+                        </p>
+
+                        <h2 style="font-family: Minecraft;">The Camel Husk</h2>
+                        <p>
+                            Riding into the deserts atop towering camels, these undead warriors now roam the sun-scorched dunes with unstoppable determination.<br>
+                            The husk rider is relentless, using speed and aggression to strike anyone foolish enough to cross their path.<br>
+                            Their Parched companion adds an extra layer of danger, coordinating attacks and making every encounter unpredictable and deadly.<br>
+                            Together, they dominate the desert terrain, chasing down players and punishing poor positioning with devastating precision.<br>
+                            Defeat the husk rider and their Parched mount to break their control — but be ready for a tough fight, as they won’t give up easily.<br>
+                            Once the camel is freed, you can claim it as your own, gaining a swift and powerful desert mount to traverse the sands with ease.<br>
+                            Mastering this duo gives you a tactical edge, allowing you to patrol, ambush, or escape across the dunes while keeping foes on high alert.<br>
+                            Underestimating the husk rider and Parched companion can quickly turn the desert from a playground into a nightmare.<br>
+                        </p>
+                    </div>
+                </div>
+                <h1 style="font-family: Minecraft; color: #70B237; text-align: center;">Friendly Mount Combos!</h1>
+
+                <div class="w3-row">
+                    <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/MCV_MoM_CharacterCards_Editorial_Body_02_larger.jpg" class="w3-half"/>
+
+                    <div class="w3-half w3-container" style="color: #70B237;">
+                        <h2 style="font-family: Minecraft;">The Armoured Steed</h2>
+                        <p>
+                            Ride a horse, spear in hand and dominate the continent like an absolute menace<br>
+                            This build turns raw speed into pure power, letting you charge across terrain and delete enemies before they can react<br>
+                            Super speedy dashes allow for lightning fast K.O power, rewarding precise timing and aggressive play<br>
+                            Perfect for hit-and-run tactics, open-field combat, and asserting main-character energy wherever you go
+                        </p>
+
+                        <h2 style="font-family: Minecraft;">The Spear Wielder with Elytra</h2>
+                        <p>
+                            Oh dear. Super-high damage can fly now<br>
+                            This is raw chaos with wings — mobility meets devastating force in the most unfair way possible<br>
+                            Swing down from the skies on your Elytra, using the dash damage from a spear to eliminate all the mobs you see<br>
+                            Altitude becomes a weapon, momentum becomes damage, and nothing below you is safe once you commit. 
+                        </p>
+
+                        <h2 style="font-family: Minecraft;">The Pig Rider</h2>
+                        <p>
+                            WHO THOUGHT THIS WAS A GOOD IDEA??????<br>
+                            These Pigs are slow, can’t be directed without carrots and just look silly<br>
+                            Every fight feels like a bad decision you fully committed to anyway<br>
+                            I do suppose you could hold carrots in your off-hand though…<br>
+                            Still impractical, still ridiculous, but somehow hilarious enough to keep using despite everything screaming “don’t”
+                        </p>
+                    </div>
+                </div>
+                <h1 style="font-family: Minecraft; color: #70B237; text-align: center;">The Coral Zombie Nautilus</h1>
+                <div class="w3-row">
+                    <img src="https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/MCV_MoM_CharacterCards_Editorial_Body_04_larger.jpg" class="w3-half"/>
+                    <div class="w3-half w3-container" style="color: #70B237;">
+                        <p>
+                            Apparently we have another variant of the Zombie Nautilus now???<br>
+                            This one can only be found in one oceanic biome - <br>
+                            But it's still ridden by a drowned with a trident, making it just as deadly as the original version<br>
+                            Same rules apply - defeat the rider to claim the Nautilus for yourself and dominate the seas!<br>
+                            For the questors - seek out coral reefs to find this vibrant variant and add it to your collection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer style="background-color: #70B237; text-align: center; padding: 10pt; margin-top: 20pt; color: #1D1C21;" class="text">
+                <p>&copy; 2026 Abhir Rao. All rights reserved.</p>
+            </footer>
+    </body>
+</html>

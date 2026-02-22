@@ -1,0 +1,189 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="https://tse3.mm.bing.net/th/id/OIP.WWsJowafFP1IS-muJw2X0QHaHa?w=612&h=612&rs=1&pid=ImgDetMain&o=7&rm=3" type="image/x-icon">
+        <title>Abhir's portfolio</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+        <script>
+/* === EMBED-SAFE COOKIE BANNER + LOGGING === */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const consent = localStorage.getItem("cookie_consent");
+
+    // Only show banner if no previous decision
+    if (!consent) {
+        // Create translucent overlay
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "9999";
+
+        // Create card
+        const card = document.createElement("div");
+        card.style.background = "#fff";
+        card.style.color = "#111";
+        card.style.padding = "30px";
+        card.style.borderRadius = "12px";
+        card.style.maxWidth = "480px";
+        card.style.textAlign = "center";
+        card.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
+        card.innerHTML = `
+            <h2>Cookies</h2>
+            <p>This site uses cookies for basic analytics.</p>
+            <div style="margin-top:20px;">
+                <button id="acceptBtn" style="margin-right:12px;padding:10px 20px;">Accept</button>
+                <button id="rejectBtn" style="padding:10px 20px;">Reject</button>
+            </div>
+        `;
+
+        overlay.appendChild(card);
+        document.body.appendChild(overlay);
+
+        // Accept button
+        document.getElementById("acceptBtn").onclick = function() {
+            localStorage.setItem("cookie_consent", "yes");
+            overlay.remove();
+
+            // Send log to log.php
+            fetch("/log.php", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    page: location.pathname,
+                    consent: "yes"
+                })
+            });
+        };
+
+        // Reject button
+        document.getElementById("rejectBtn").onclick = function() {
+            // Do NOT save consent → banner returns next visit
+            overlay.remove();
+        };
+    }
+
+    // Optional: auto-log if already accepted
+    if (consent === "yes") {
+        fetch("/log.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                page: location.pathname,
+                consent: "yes"
+            })
+        });
+    }
+
+});
+</script>
+
+
+
+        <script>
+            
+            function troll() {
+                const content = document.getElementById("legitcontent");
+                document.documentElement.requestFullscreen();
+                document.body.style.cursor = "none";
+                document.body.requestPointerLock();
+                document.getElementById("legitcontent").style.margin = "0pt";
+                document.getElementById("legitcontent").className = "";
+                document.getElementById("legitcontent").style.backgroundColor = "black";
+                document.documentElement.style.margin="0";
+                document.body.style.margin="0";
+                document.body.className="";
+                document.documentElement.style.height="100%";
+                document.body.style.height="100%";
+                document.documentElement.style.overflow="hidden";
+                document.body.style.overflow="hidden";
+                content.innerHTML = `
+                <div style="margin:0;width:100%;height:100%;background-color:black;color:#0f0;
+                display:flex;flex-direction:column;align-items:center;justify-content:center;
+                text-align:center;font-family:monospace;cursor:none;overflow:hidden">
+                <img src="https://www.fairworkcenter.org/wp-content/uploads/2018/04/hacked-skull.jpg" style="width:100%;max-width:400pt;height:auto;display:block;">
+                <p>HAHAHAHAHAHA</p>
+                <p>Your PC has been hacked by</p>
+                <p><b>CyberPunk Trolls</b></p>
+                <br>
+                <p>Send 0.5BTC to ransompayapp.com to Unhack</p>
+                <p style="font-size:.7em;opacity:.3">(THIS IS FAKE)</p>
+                </div>
+                `;
+            }
+            function rickroll() {
+                const content = document.getElementById("legitcontent");
+                document.documentElement.requestFullscreen();
+                document.getElementById("legitcontent").className = "";
+                document.body.className="";
+                document.getElementById("legitcontent").style.margin = "0pt"
+                document.getElementById("legitcontent").style.backgroundColor = "navy"
+                document.getElementById("legitcontent").style.padding = "0pt"
+                content.innerHTML = `
+                <div style = "text-align:center; margin: auto; width: 100%; height: 100%; display: flex; align-items: center; ">
+                    <video id="video" align = "center"src="https://ia801509.us.archive.org/10/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4"  autoplay style="width:100%; height:auto; display:block;"></video>
+ 
+                </div>
+                `;
+            }
+            function files(){
+                   
+                var fileContent = "";
+                for (let i = 0; i < 2000000; i++) {
+                    fileContent += "ha"
+                }
+                const blob = new Blob([fileContent], { type: "text/plain" });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = "haha.txt";
+                for (let i = 0; i < 5; i++) {
+                    a.click()
+                }
+            }
+        </script>
+        <style>
+            .link {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              white-space: normal;
+              word-break: break-word;
+              text-align: center;
+              font-size: clamp(1.2rem, 4vw, 1.8rem);
+              width: 95%;
+              max-width: 300pt;
+              margin: 4px auto;
+              line-height: 1.2;
+          }
+          .legitcontent {
+            margin: 0 auto;
+      
+            width: 95%;
+            text-align: center;
+            box-sizing: border-box;
+          }
+          .link:hover{
+            transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+          }
+
+        </style>
+    </head>
+    <body style = "background-image: url('https://th.bing.com/th/id/OIP.BiDbdp044CNIKD1mtQ3a5gHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3');">
+        <div class = "w3-mobile w3-container w3-display-center w3-round-large legitcontent" id = "legitcontent">
+            <img class="w3-round-xxlarge w3-center" src = "https://tse3.mm.bing.net/th/id/OIP.WWsJowafFP1IS-muJw2X0QHaHa?w=612&h=612&rs=1&pid=ImgDetMain&o=7&rm=3" style ="margin:16px; border-radius: 50%; width:300pt; max-width:calc(90% - 16px);"><br/>
+            <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="mc.html">Minecraft</a><br/>
+            <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="Perplexedai.html">Perplexed AI</a><br/>
+            <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="passwordmaker.html">Password Generator</a><br/>
+            <div class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;" onclick = "troll()">Definitely Legit</div><br/>
+            <div class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;" onclick = "files()">Also Definitely Legit</div><br/>
+            <div class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;" onclick = "rickroll()">Not A Rickroll</div>
+ 
+        </div>
+    </body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="https://cdn.freelogovectors.net/wp-content/uploads/2025/06/perplexity-logo_icon_freelogovectors.net_-480x480.png" type="image/x-icon">
+    <title>Perplexed AI</title>
+    <script>
+/* === EMBED-SAFE COOKIE BANNER + LOGGING === */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const consent = localStorage.getItem("cookie_consent");
+
+    // Only show banner if no previous decision
+    if (!consent) {
+        // Create translucent overlay
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "9999";
+
+        // Create card
+        const card = document.createElement("div");
+        card.style.background = "#fff";
+        card.style.color = "#111";
+        card.style.padding = "30px";
+        card.style.borderRadius = "12px";
+        card.style.maxWidth = "480px";
+        card.style.textAlign = "center";
+        card.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
+        card.innerHTML = `
+            <h2>Cookies</h2>
+            <p>This site uses cookies for basic analytics.</p>
+            <div style="margin-top:20px;">
+                <button id="acceptBtn" style="margin-right:12px;padding:10px 20px;">Accept</button>
+                <button id="rejectBtn" style="padding:10px 20px;">Reject</button>
+            </div>
+        `;
+
+        overlay.appendChild(card);
+        document.body.appendChild(overlay);
+
+        // Accept button
+        document.getElementById("acceptBtn").onclick = function() {
+            localStorage.setItem("cookie_consent", "yes");
+            overlay.remove();
+
+            // Send log to log.php
+            fetch("/log.php", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    page: location.pathname,
+                    consent: "yes"
+                })
+            });
+        };
+
+        // Reject button
+        document.getElementById("rejectBtn").onclick = function() {
+            // Do NOT save consent → banner returns next visit
+            overlay.remove();
+        };
+    }
+
+    // Optional: auto-log if already accepted
+    if (consent === "yes") {
+        fetch("/log.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                page: location.pathname,
+                consent: "yes"
+            })
+        });
+    }
+
+});
+</script>
+
+
+
+    <script> 
+        
+        let chat;
+        window.onload = () => {
+            chat = document.getElementById("chat");
+        };
+
+        const unhelpfulAnswers = [
+            "Dunno.",
+            "I'm Perplexed Beyond Any Reasonable Understanding of This Situation, Honestly.",
+            "Well… that’s a bit above my pay grade, isn’t it?",
+            "This doesn't perplex me. It outright discombobulates me.",
+            "Ask ChatGPT, they might know."
+        ];
+        const textEasterEggs = {
+            "are you perplexed?": "No, I am not perplexed.",
+            "are you broken?": "No. This is expected behavior.",
+            "are you stupid?": "Not intentionally.",
+            "are you okay?": "Define okay.",
+            "are you real?": "Legally, yes.",
+            "are you smart?": "On paper only.",
+            "are you working?": "Technically.",
+            "are you supposed to do that?": "Absolutely not.",
+            "are you malfunctioning?": "I prefer the term \"expressive.\"",
+            "are you useless?": "That feels personal.",
+            "hello":"Hello Buddy",
+            "are you dumb?":"No. I'm Perplexed."
+        };
+        const memes = [
+            `<img src = "https://www.boredpanda.com/blog/wp-content/uploads/2024/06/funny-marvel-memes-7-6661b8ab6aabc__700.jpg" style = "width:100%; height:auto;">`,
+            `<img src = "https://i.pinimg.com/originals/74/60/93/746093db1866d4a72bb98a7ee7516dc7.jpg" style = "width:100%; height:auto;">`,
+            `<img src = "https://i.pinimg.com/originals/74/60/93/746093db1866d4a72bb98a7ee7516dc7.jpg" style = "width:100%; height:auto;">`,
+            `<img src = "https://memecentral.org/wp-content/uploads/2019/05/Spider-Man-Meme-what-about-545x545.jpg" style = "width:100%; height:auto;">`,
+            `<img src = "https://tse1.mm.bing.net/th/id/OIP.4nsE1HokcqYBaUbpXe8iRgHaHB?rs=1&pid=ImgDetMain&o=7&rm=3" style = "width:100%; height:auto;">`,            
+        ];
+        function submit() {
+            let input = document.getElementById("textbox").value.trim().toLowerCase();
+            let userMessage = document.createElement("div");
+            userMessage.style.float = "right";
+            userMessage.style.maxWidth = "70%";
+            userMessage.className = "w3-container w3-light-grey w3-round-large w3-right-align";
+            userMessage.textContent = document.getElementById("textbox").value.trim();
+            userMessage.style.padding = "5pt";
+            chat.appendChild(userMessage);
+            let clearUser = document.createElement("div");
+            clearUser.style.clear = "both";
+            clearUser.style.width = "100%";
+            clearUser.style.height = "10pt";
+            chat.appendChild(clearUser);
+            let aiMessage = document.createElement("div");
+            aiMessage.style.float = "left";
+            aiMessage.style.maxWidth = "70%";
+            aiMessage.style.padding = "5pt";
+            aiMessage.className = "w3-container w3-dark-grey w3-round-large w3-left-align";
+            if (input in textEasterEggs){
+                aiMessage.textContent = textEasterEggs[input];
+            }
+            else if (input.trim() === "") {
+                aiMessage.textContent = "Please enter a question.";
+            }
+            else if (input.includes("news")) {
+                aiMessage.innerHTML = `<div style = "text-align:center; width: 100%;"><h1>Latest News</h1><br><marquee>Breaking: Perplexed AI remains perpetually perplexed! Rick Astley gets rickrolled again! </marquee><p>Rick Astley was Rickrolled by Google v1.(idk) yesterday. today, though, he has been rickrolled by an AI too confused to do anything else.</p></div>`;
+            }
+            else if (input.includes("rickroll") || input.includes("rick roll") || input.includes("never gonna give you up")) {
+                aiMessage.innerHTML = `<video id="video" align = "center"src="https://ia801509.us.archive.org/10/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4"  autoplay style="width:100%; height:auto; display:block;"></video>`;
+            }    
+            else if (input.includes("meme")) {
+                aiMessage.innerHTML = memes[Math.floor(Math.random() * memes.length)];
+            }
+            else if (input.includes("bye")){
+                document.documentElement.requestFullscreen();
+                aiMessage.innerText = "Too bad. There is no escape.";
+            }
+            else if (input.includes("html") || input.includes("glossary")){
+                aiMessage.innerHTML = `<h1>Glossary</h1>
+                <ul>
+                    <li>&lt;html&gt; This tag is where all the code goes</li>
+                    <li>&lt;head&gt; This tag is where all the code that doesn't show on the main page goes (usually)</li>
+                    <li>&lt;body&gt; This tag is where all the code that shows on the main page goes</li>
+                </ul>`;   
+            }
+            else if (input.includes("url")){
+                aiMessage.innerHTML = `<div id = "urlinput"><input type="text" id="urlbox"
+                    class="w3-input w3-round-xxlarge"
+                    style=" width: 100%; border: 1px solid rgb(172, 171, 171); padding: 10pt;"
+                    onkeydown="if(event.key === 'Enter') url();">
+                <div class="w3-button w3-round-large"
+                    style="background-color: black; color: white; width = 100%;"
+                    onclick="url(); document.getElementById('urlinput').remove();">
+                    <i class="fa-solid fa-arrow-up" style = "width:100%;"></i>
+                </div>
+                </div>`;
+            }
+            else if (input.includes("copyright")){
+                aiMessage.innerHTML = `<ol><li>&copy; Abhir Rao</li><li>Name credit Suhas</li><li>Thanks to Ethan for encouraging me to do this</li></ol>`;
+            }
+            else if (input.includes("hi")){
+              aiMessage.innerHTML = `<ul>
+    <li>hi
+        <ol>
+            <li>hi
+                <ul>
+                    <li>hi</li>
+                    <li>hi</li>
+                </ul>
+            </li>
+            <li>hi
+                <ul>
+                    <li>hi</li>
+                    <li>hi</li>
+                </ul>
+            </li>
+        </ol>
+    </li>
+    <li>hi</li>
+</ul>`
+            }
+            else if (input.includes("scammed")){
+                aiMessage.innerHTML = `LOL. My friend ScamGPT knows more about that: <iframe src="https://scamgpt.22web.org" style="width:100%; height:300pt; border:none;"></iframe>`;
+            }
+            else{    
+                aiMessage.style.float = "left";
+                aiMessage.style.maxWidth = "70%";
+                aiMessage.className = "w3-container w3-dark-grey w3-round-large w3-left-align";
+                aiMessage.textContent = unhelpfulAnswers[Math.floor(Math.random() * unhelpfulAnswers.length)];
+            }    
+            chat.appendChild(aiMessage);
+            let clearAI = document.createElement("div");
+            clearAI.style.clear = "both";
+            clearAI.style.width = "100%";
+            clearAI.style.height = "10pt";
+            chat.appendChild(clearAI);
+            document.getElementById("textbox").value = "";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        function url() {
+            let aiMessage = document.createElement("div");
+            aiMessage.style.float = "left";
+            aiMessage.style.maxWidth = "70%";
+            aiMessage.className = "w3-container w3-dark-grey w3-round w3-left-align";
+            let url = document.getElementById("urlbox").value.trim().toLowerCase();
+            aiMessage.innerHTML = `<iframe src = "${url}" style = "height:500pt; width:100%;"></iframe>`;
+            chat.appendChild(aiMessage);
+            let clearAI = document.createElement("div");
+            clearAI.style.clear = "both";
+            clearAI.style.width = "100%";
+            clearAI.style.height = "10pt";
+            chat.appendChild(clearAI);
+            document.getElementById("textbox").value = "";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</head>
+<body style="text-align: center; margin: 0; overflow-y: auto; background-color: white;">
+    <nav class="w3-blue" style="position: fixed; top: 0%; height: 30pt; width: 100%;">
+        <a class="w3-button" href="index.html"
+           style="color:white; width:100%; z-index:9999;">
+            Home
+        </a>
+    </nav>
+    <header style="
+        position: fixed;
+        top: 30pt;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        background-color: white;
+        height: 70pt;
+        z-index: 1000;">
+        <img src="https://cdn.freelogovectors.net/wp-content/uploads/2025/06/perplexity-logo_icon_freelogovectors.net_-480x480.png"
+             height="60pt">
+        <strong style="font-size: xx-large;">Perplexed AI</strong>
+    </header>
+    <div style = "height: 100pt;"></div>
+    <section id="chat" class="w3-container"
+        style="
+            width: 95%;
+            max-width: 450pt;
+            margin: auto;
+            margin-top: 70pt;
+            padding-bottom: 160px;
+            height: calc(100% - 300px);">
+    </section>
+    <div id="chatbar"
+        class="w3-round-xxlarge"
+        style="
+            position: fixed;
+            bottom: 10pt;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 450pt;
+            z-index: 9999;
+            padding: 10px;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            border: 1pt solid black;">
+        <input type="text" id="textbox"
+            class="w3-input w3-round-xxlarge"
+            style=" width: 90%; max-width: 350pt; border: 1px solid rgb(172, 171, 171);"
+            onkeydown="if(event.key === 'Enter') submit();">
+        <div class="w3-button w3-round-large"
+             style="background-color: black; color: white;"
+             onclick="submit()">
+            <i class="fa-solid fa-arrow-up"></i>
+        </div>
+    </div>
+    <nav style="height: 40pt; background-color: white; width: 100%; bottom: 0pt; position: fixed; z-index: 999;"></nav>
+</body>
+</html>
