@@ -1,22 +1,29 @@
-export async function onRequestPost(context) {
-  const { request, env } = context;
+export async function onRequest(context) {
+  if (context.request.method !== "POST") {
+    return new Response("Use POST bro", { status: 405 });
+  }
 
-  let body = {};
   try {
-    body = await request.json();
-  } catch {}
+    const data = await context.request.json();
 
-  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-  const userAgent = request.headers.get("User-Agent") || "unknown";
-  const time = new Date().toISOString();
-  const page = body.page || "unknown";
-  const consent = body.consent || "unknown";
+    const log = {
+      time: new Date().toISOString(),
+      ip: context.request.headers.get("CF-Connecting-IP") || "unknown",
+      page: data.page || "",
+      info: data.info || ""
+    };
 
-  await env.MY_BINDING.prepare(
-    "INSERT INTO logs (ip, time, userAgent, page, consent) VALUES (?, ?, ?, ?, ?)"
-  )
-    .bind(ip, time, userAgent, page, consent)
-    .run();
+    console.log(JSON.stringify(log));
 
-  return new Response("logged");
+    return new Response(
+      JSON.stringify({ status: "ok" }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ error: err.message }),
+      { status: 500 }
+    );
+  }
 }
