@@ -1,29 +1,24 @@
 export async function onRequest(context) {
-  if (context.request.method !== "POST") {
-    return new Response("Use POST bro", { status: 405 });
+  const { request } = context;
+
+  if (request.method !== "POST") {
+    return new Response("Use POST", { status: 405 });
   }
 
+  let data = {};
   try {
-    const data = await context.request.json();
-
-    const log = {
-      time: new Date().toISOString(),
-      ip: context.request.headers.get("CF-Connecting-IP") || "unknown",
-      page: data.page || "",
-      info: data.info || ""
-    };
-
-    console.log(JSON.stringify(log));
-
-    return new Response(
-      JSON.stringify({ status: "ok" }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-
+    data = await request.json();
   } catch (err) {
-    return new Response(
-      JSON.stringify({ error: err.message }),
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400 });
   }
-}
+
+  // Just log to console for now
+  console.log("Visitor log:", {
+    ip: request.headers.get("CF-Connecting-IP") || "unknown",
+    page: data.page || "unknown",
+    consent: data.consent || "unknown",
+    time: new Date().toISOString()
+  });
+
+  return new Response(JSON.stringify({ status: "ok" }), { headers: { "Content-Type": "application/json" } });
+};
