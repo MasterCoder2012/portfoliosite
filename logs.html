@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visitor Logs</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 4px 8px; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+<h1>Visitor Logs</h1>
+<table id="log-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>IP</th>
+      <th>Page</th>
+      <th>Consent</th>
+      <th>Time</th>
+      <th>User Agent</th>
+      <th>Referrer</th>
+      <th>Language</th>
+      <th>Device</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadLogs() {
+  const logs = JSON.parse(sessionStorage.getItem("logsData") || "[]");
+  if (!logs.length) {
+    document.body.innerHTML = "<h2>Unauthorized or session expired</h2>";
+    return;
+  }
+
+  const tbody = document.querySelector("#log-table tbody");
+  tbody.innerHTML = "";
+
+  logs.forEach(row => {
+    const tr = document.createElement("tr");
+    Object.values(row).forEach(val => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+loadLogs();
+</script>
+</body>
+</html>
