@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Logs Login</title>
+  <style>
+    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f2f2f2; }
+    #login-card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); width: 320px; text-align:center;}
+    input { padding: 8px; margin-bottom: 12px; width: 100%; }
+    button { padding: 10px; width: 100%; cursor: pointer; }
+    p { color: red; }
+  </style>
+</head>
+<body>
+<div id="login-card">
+  <h2>Enter Password</h2>
+  <input type="password" id="pw" placeholder="Password">
+  <button id="submitBtn">Login</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.onclick = async () => {
+  const pw = document.getElementById("pw").value;
+
+  try {
+    const res = await fetch("/get-logs-secure", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pw })
+    });
+
+    if (res.status === 401) {
+      document.getElementById("msg").textContent = "Wrong password!";
+      return;
+    }
+
+    const logs = await res.json();
+    // save a temporary token in sessionStorage
+    sessionStorage.setItem("logsData", JSON.stringify(logs));
+    window.location.href = "/logs.html";
+
+  } catch (err) {
+    document.getElementById("msg").textContent = "Error fetching logs";
+    console.error(err);
+  }
+};
+</script>
+</body>
+</html>
