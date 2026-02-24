@@ -9,14 +9,16 @@ export async function onRequest(context) {
     const ip =
       context.request.headers.get("CF-Connecting-IP") || "unknown";
 
-    console.log("LOG:", {
-      ip,
-      page: data.page,
-      consent: data.consent,
-    });
+    const time = new Date().toISOString();
+
+    await context.env.DB.prepare(
+      "INSERT INTO logs (ip, page, consent, time) VALUES (?, ?, ?, ?)"
+    )
+      .bind(ip, data.page, data.consent, time)
+      .run();
 
     return new Response(
-      JSON.stringify({ status: "ok" }),
+      JSON.stringify({ status: "saved" }),
       { headers: { "Content-Type": "application/json" } }
     );
   } catch (err) {
