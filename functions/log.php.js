@@ -1,32 +1,41 @@
 export async function onRequest(context) {
-  console.log("FUNCTION HIT");
-
   try {
     if (context.request.method !== "POST") {
       return new Response("Method not allowed", { status: 405 });
     }
 
     const data = await context.request.json();
-    console.log("DATA:", data);
-
-    const ip =
-      context.request.headers.get("CF-Connecting-IP") || "unknown";
-
-    console.log("IP:", ip);
-
+    const ip = context.request.headers.get("CF-Connecting-IP") || "unknown";
     const time = new Date().toISOString();
+    const userAgent = context.request.headers.get("user-agent") || "unknown";
+    const referrer = context.request.headers.get("referer") || "unknown";
+    const language = context.request.headers.get("accept-language") || "unknown";
 
-    const result = await context.env.DB.prepare(
-      "INSERT INTO logs (ip, page, consent, time) VALUES (?, ?, ?, ?)"
+    // parse basic device info from userAgent
+    let deviceType = "unknown";
+    if (/mobile/i.test(userAgent)) deviceType = "mobile";
+    else if (/tablet/i.test(userAgent)) deviceType = "tablet";
+    else deviceType = "desktop";
+
+    await context.env.DB.prepare(
+      `INSERT INTO logs 
+      (ip, page, consent, time, userAgent, referrer, language, deviceType)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
     )
-      .bind(ip, data.page, data.consent, time)
-      .run();
+    .bind(
+      ip,
+      data.page,
+      data.consent,
+      time,
+      userAgent,
+      referrer,
+      language,
+      deviceType
+    )
+    .run();
 
-    console.log("DB RESULT:", result);
-
-    return new Response("ok");
+    return new Response(JSON.stringify({ status: "saved" }), { headers: { "Content-Type": "application/json" } });
   } catch (err) {
-    console.log("ERROR:", err);
-    return new Response(err.toString(), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
