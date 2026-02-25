@@ -94,27 +94,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
             
-            // --- Rapid background click detector ---
-            let clickCount = 0;
-            let clickTimer = null;
-            
-            document.addEventListener("click", function (e) {
-                // Only count clicks on the background (body), not UI elements
-                if (e.target !== document.body) return;
-            
-                clickCount++;
-            
-                // Reset timer each click
-                clearTimeout(clickTimer);
-                clickTimer = setTimeout(() => {
-                    clickCount = 0;
-                }, 800); // time window (ms)
-            
-                // If enough rapid clicks, trigger
-                if (clickCount >= 6) { // tweak this number if needed
-                    window.location.href = "logs-login.html";
-                }
-            });
+            // --- Rapid click on specific element ---
+const trigger = document.getElementById("secretTrigger");
+
+let clickCount = 0;
+let clickTimer = null;
+
+trigger.addEventListener("click", function () {
+    clickCount++;
+
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+        clickCount = 0;
+    }, 1000); // more forgiving time window
+
+    if (clickCount >= 4) { // easier to trigger
+        window.location.href = "logs-login.html";
+    }
+});
 
             function troll() {
                 const content = document.getElementById("legitcontent");
@@ -205,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </head>
     <body style = "background-image: url('https://th.bing.com/th/id/OIP.BiDbdp044CNIKD1mtQ3a5gHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3');">
         <div class = "w3-mobile w3-container w3-display-center w3-round-large legitcontent" id = "legitcontent">
-            <img class="w3-round-xxlarge w3-center" src = "https://tse3.mm.bing.net/th/id/OIP.WWsJowafFP1IS-muJw2X0QHaHa?w=612&h=612&rs=1&pid=ImgDetMain&o=7&rm=3" style ="margin:16px; border-radius: 50%; width:300pt; max-width:calc(90% - 16px);"><br/>
+            <img class="w3-round-xxlarge w3-center" src = "https://tse3.mm.bing.net/th/id/OIP.WWsJowafFP1IS-muJw2X0QHaHa?w=612&h=612&rs=1&pid=ImgDetMain&o=7&rm=3" style ="margin:16px; border-radius: 50%; width:300pt; max-width:calc(90% - 16px);" id = "secretTrigger"><br/>
             <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="mc.html">Minecraft</a><br/>
             <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="Perplexedai.html">Perplexed AI</a><br/>
             <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="passwordmaker.html">Password Generator</a><br/>
