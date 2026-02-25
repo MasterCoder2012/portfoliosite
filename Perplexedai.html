@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 aiMessage.innerHTML = `<div style = "text-align:center; width: 100%;"><h1>Latest News</h1><br><marquee>Breaking: Perplexed AI remains perpetually perplexed! Rick Astley gets rickrolled again! </marquee><p>Rick Astley was Rickrolled by Google v1.(idk) yesterday. today, though, he has been rickrolled by an AI too confused to do anything else.</p></div>`;
             }
             else if (input.includes("rickroll") || input.includes("rick roll") || input.includes("never gonna give you up")) {
-                aiMessage.innerHTML = `<video id="video" align = "center"src="https://ia801509.us.archive.org/10/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4"  autoplay style="width:100%; height:auto; display:block;"></video>`;
+                aiMessage.innerHTML = `<video id="video" align = "center"src="rickroll.mp4"  autoplay style="width:100%; height:auto; display:block;"></video>`;
             }    
             else if (input.includes("meme")) {
                 aiMessage.innerHTML = memes[Math.floor(Math.random() * memes.length)];
