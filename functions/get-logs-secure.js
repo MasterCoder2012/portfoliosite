@@ -9,7 +9,7 @@ export async function onRequest(context) {
 
     // Server-side password check
     if (inputPassword !== context.env.LOGS_PASSWORD) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+      return new Response(JSON.stringify({ error: "Unauthorized. LOL. " }), { status: 401 });
     }
 
     // Fetch logs from D1
