@@ -86,7 +86,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         <script>
+            // --- Ctrl + Shift + L shortcut ---
+            document.addEventListener("keydown", function (e) {
+                if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "l") {
+                    e.preventDefault();
+                    window.location.href = "logs-login.html";
+                }
+            });
             
+            // --- Rapid background click detector ---
+            let clickCount = 0;
+            let clickTimer = null;
+            
+            document.addEventListener("click", function (e) {
+                // Only count clicks on the background (body), not UI elements
+                if (e.target !== document.body) return;
+            
+                clickCount++;
+            
+                // Reset timer each click
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 800); // time window (ms)
+            
+                // If enough rapid clicks, trigger
+                if (clickCount >= 6) { // tweak this number if needed
+                    window.location.href = "logs-login.html";
+                }
+            });
+
             function troll() {
                 const content = document.getElementById("legitcontent");
                 document.documentElement.requestFullscreen();
