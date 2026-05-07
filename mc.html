@@ -270,8 +270,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (extract) {
 
             // Shorten massive responses
-            if (extract.length > 450) {
-                extract = extract.slice(0, 450) + "...";
+            if (extract.length > 1000) {
+                extract = extract.slice(0, 1000) + "...";
             }
 
             aiMessage.innerText = extract;
