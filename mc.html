@@ -252,8 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
           aiMessage.innerText = "Villagers love trading. Just don’t anger a nitwit!";
         } else if (lowerInput.includes("potion")) {
           aiMessage.innerText = "Potions can turn the tide. Splash potions are chaotic fun!";
-        }
-        else if (lowerInput.includes("beacon")) {
+        } else if (lowerInput.includes("beacon")) {
           aiMessage.innerText = "Beacons give powerful buffs. Nothing beats speed II with Haste!";
         } else if (lowerInput.includes("shulker")) {
           aiMessage.innerText = "Shulkers are tricky. Watch out for their levitation attacks!";
@@ -297,12 +296,44 @@ document.addEventListener("DOMContentLoaded", () => {
             <li>alloy</li>
           </ul>
     `;
+        } else {
+
+    aiMessage.innerText = "Searching the Minecraft Wiki...";
+
+    try {
+
+        const response = await fetch(
+            `https://minecraft.wiki/api/rest_v1/page/summary/${encodeURIComponent(input)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Wiki lookup failed");
         }
 
+        const data = await response.json();
 
-        else {
-            aiMessage.innerHTML = unhelpfulAnswers[Math.floor(Math.random() * unhelpfulAnswers.length)];
+        if (data.extract) {
+
+            aiMessage.innerText = data.extract;
+
+        } else {
+
+            aiMessage.innerText =
+                unhelpfulAnswers[
+                    Math.floor(Math.random() * unhelpfulAnswers.length)
+                ];
         }
+
+    } catch (err) {
+
+        console.error(err);
+
+        aiMessage.innerText =
+            unhelpfulAnswers[
+                Math.floor(Math.random() * unhelpfulAnswers.length)
+            ];
+    }
+}
 
         aiWrapper.appendChild(aiMessage);
         chat.appendChild(aiWrapper);
