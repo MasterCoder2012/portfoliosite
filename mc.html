@@ -220,91 +220,23 @@ document.addEventListener("DOMContentLoaded", () => {
           aiMessage.textContent = "Ethan Scaria is the supreme Lord of Maths.";
         } else if (lowerInput.includes("copyright")) {
           aiMessage.innerHTML = `<ol><li>&copy; Abhir Rao</li><li>Thanks to Ethan for encouraging me to do this</li></ol>`;
-        } else if (lowerInput.includes("netherite")) {
-          aiMessage.innerText = "Netherite gear is the ultimate flex. Make sure you have a good smithing setup!";
-        } else if (lowerInput.includes("mounts")) {
-          aiMessage.innerText = "Mounts are awesome! Zombies, pigs, horses… which one do you like?";
-        } else if (lowerInput.includes("spear")) {
-          aiMessage.innerText = "The spear has two attacks: Lunge and Dash. Timing is everything!";
-        } else if (lowerInput.includes("zombie")) {
-          aiMessage.innerText = "Zombie mobs are super aggressive now. Watch out for the Zombie Horse!";
-        } else if (lowerInput.includes("elytra")) {
-          aiMessage.innerText = "Flying with Elytra plus a spear dash is pure chaos!";
-        } else if (lowerInput.includes("pig")) {
-          aiMessage.innerText = "Pig riders are ridiculous, but somehow fun to try anyway.";
-        } else if (lowerInput.includes("creeper")) {
-          aiMessage.innerText = "Creepers are sneaky! One wrong step and boom 💥";
-        } else if (lowerInput.includes("nether")) {
-          aiMessage.innerText = "The Nether is dangerous—bring a fire-resistant potion!";
-        } else if (lowerInput.includes("enderman")) {
-          aiMessage.innerText = "Endermen teleport all over the place. Don’t stare!";
-        } else if (lowerInput.includes("diamond")) {
-          aiMessage.innerText = "Diamonds are rare but worth the hunt. Fortune pickaxe helps!";
-        } else if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
-          aiMessage.innerText = "Hey there! Ready for some Minecraft chaos?";
-        } else if (lowerInput.includes("bye") || lowerInput.includes("goodbye")) {
-          aiMessage.innerText = "No escaping me that easily!";
-        } else if (lowerInput.includes("meme")) {
-          aiMessage.innerHTML = memes[Math.floor(Math.random() * memes.length)];
-        } else if (lowerInput.includes("redstone")) {
-          aiMessage.innerText = "Redstone contraptions can get really crazy. Traps or doors, your choice!";
-        } else if (lowerInput.includes("villager")) {
-          aiMessage.innerText = "Villagers love trading. Just don’t anger a nitwit!";
-        } else if (lowerInput.includes("potion")) {
-          aiMessage.innerText = "Potions can turn the tide. Splash potions are chaotic fun!";
-        } else if (lowerInput.includes("beacon")) {
-          aiMessage.innerText = "Beacons give powerful buffs. Nothing beats speed II with Haste!";
-        } else if (lowerInput.includes("shulker")) {
-          aiMessage.innerText = "Shulkers are tricky. Watch out for their levitation attacks!";
-        } else if (lowerInput.includes("trident")) {
-          aiMessage.innerText = "Tridents are OP in water. Loyalty or Riptide makes all the difference!";
-        } else if (lowerInput.includes("warden")) {
-          aiMessage.innerText = "The Warden? Don’t even try to fight it without a plan. Just run!";
-        } else if (lowerInput.includes("phantom")) {
-          aiMessage.innerText = "Phantoms hate you if you skip sleep. Bring a bow and some patience!";
-        } else if (lowerInput.includes("slime")) {
-          aiMessage.innerText = "Slimes bounce around unpredictably. Useful for farms if you’re clever!";
-        } else if (lowerInput.includes("ender chest")) {
-          aiMessage.innerText = "Ender Chests are perfect for keeping your valuables safe anywhere!";
-        } else if (lowerInput.includes("alloy")) {
-          aiMessage.innerText = "Alloys like copper or bronze are fun for mods. Minecraft engineering vibes!";
-        } else if (lowerInput.includes("special prompts")) {
-          aiMessage.innerHTML = `
-        <ul>
-            <li>ethan</li>
-            <li>copyright</li>
-            <li>mounts</li>
-            <li>spear</li>
-            <li>zombie</li>
-            <li>elytra</li>
-            <li>pig</li>
-            <li>creeper</li>
-            <li>nether</li>
-            <li>enderman</li>
-            <li>diamond</li>
-            <li>redstone</li>
-            <li>villager</li>
-            <li>potion</li>
-            <li>beacon</li>
-            <li>shulker</li>
-            <li>trident</li>
-            <li>warden</li>
-            <li>phantom</li>
-            <li>slime</li>
-            <li>ender chest</li>
-            <li>netherite</li>
-            <li>alloy</li>
-          </ul>
-    `;
         } else {
 
     aiMessage.innerText = "Searching the Minecraft Wiki...";
 
     try {
 
-        // 1. SEARCH (instead of treating input as a page title)
+        // Clean search input for better wiki matching
+        const searchQuery = input
+            .toLowerCase()
+            .replace(/[^\w\s]/g, "")
+            .replace(/\b(what|is|the|a|an|tell|me|about|how|do|i)\b/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        // 1. SEARCH
         const searchResponse = await fetch(
-            `https://minecraft.wiki/api.php?action=query&list=search&format=json&srsearch=${encodeURIComponent(input)}&origin=*`
+            `https://minecraft.wiki/api.php?action=query&list=search&format=json&srsearch=${encodeURIComponent(searchQuery)}&origin=*`
         );
 
         if (!searchResponse.ok) {
@@ -319,11 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error("No search results");
         }
 
-        const title = topResult.title;
-
         // 2. FETCH PAGE EXTRACT
         const pageResponse = await fetch(
-            `https://minecraft.wiki/api.php?action=query&format=json&prop=extracts&exintro=true&explaintext=true&origin=*&titles=${encodeURIComponent(title)}`
+            `https://minecraft.wiki/api.php?action=query&format=json&prop=extracts&exintro=true&explaintext=true&origin=*&titles=${encodeURIComponent(topResult.title)}`
         );
 
         if (!pageResponse.ok) {
@@ -332,14 +262,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const pageData = await pageResponse.json();
 
-        const pages = pageData?.query?.pages;
-        const page = pages ? Object.values(pages)[0] : null;
+        const page =
+            Object.values(pageData.query.pages)[0];
 
-        const extract = page?.extract?.trim();
+        let extract = page?.extract?.trim();
 
         if (extract) {
+
+            // Shorten massive responses
+            if (extract.length > 450) {
+                extract = extract.slice(0, 450) + "...";
+            }
+
             aiMessage.innerText = extract;
+
         } else {
+
             aiMessage.innerText =
                 unhelpfulAnswers[
                     Math.floor(Math.random() * unhelpfulAnswers.length)
@@ -347,6 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     } catch (err) {
+
         console.error(err);
 
         aiMessage.innerText =
