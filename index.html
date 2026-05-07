@@ -164,14 +164,15 @@ document.addEventListener("DOMContentLoaded", () => {
             function files(){
                    
                 var fileContent = "";
-                for (let i = 0; i < 2000000; i++) {
-                    fileContent += "ha"
+                for (let i = 0; i < 200; i++) {
+                    fileContent += "You've been trolled! "
                 }
+                
                 const blob = new Blob([fileContent], { type: "text/plain" });
                 const a = document.createElement("a");
                 a.href = URL.createObjectURL(blob);
                 a.download = "haha.txt";
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 200; i++) {
                     a.click()
                 }
             }
