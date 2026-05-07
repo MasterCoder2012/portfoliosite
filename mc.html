@@ -302,25 +302,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-        const response = await fetch(
-            `https://minecraft.wiki/api.php?action=query&format=json&prop=extracts&exintro=true&explaintext=true&origin=*&titles=${encodeURIComponent(input)}`
+        // 1. SEARCH (instead of treating input as a page title)
+        const searchResponse = await fetch(
+            `https://minecraft.wiki/api.php?action=query&list=search&format=json&srsearch=${encodeURIComponent(input)}&origin=*`
         );
 
-        if (!response.ok) {
-            throw new Error("Wiki lookup failed");
+        if (!searchResponse.ok) {
+            throw new Error("Search failed");
         }
 
-        const data = await response.json();
+        const searchData = await searchResponse.json();
 
-        const pages = data.query.pages;
-        const page = Object.values(pages)[0];
+        const topResult = searchData?.query?.search?.[0];
 
-        if (page.extract && page.extract.trim() !== "") {
+        if (!topResult) {
+            throw new Error("No search results");
+        }
 
-            aiMessage.innerText = page.extract;
+        const title = topResult.title;
 
+        // 2. FETCH PAGE EXTRACT
+        const pageResponse = await fetch(
+            `https://minecraft.wiki/api.php?action=query&format=json&prop=extracts&exintro=true&explaintext=true&origin=*&titles=${encodeURIComponent(title)}`
+        );
+
+        if (!pageResponse.ok) {
+            throw new Error("Page fetch failed");
+        }
+
+        const pageData = await pageResponse.json();
+
+        const pages = pageData?.query?.pages;
+        const page = pages ? Object.values(pages)[0] : null;
+
+        const extract = page?.extract?.trim();
+
+        if (extract) {
+            aiMessage.innerText = extract;
         } else {
-
             aiMessage.innerText =
                 unhelpfulAnswers[
                     Math.floor(Math.random() * unhelpfulAnswers.length)
@@ -328,7 +347,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     } catch (err) {
-
         console.error(err);
 
         aiMessage.innerText =
