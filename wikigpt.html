@@ -331,60 +331,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
 
-                const response = await fetch(
-                    "https://en.wikipedia.org/api/rest_v1/page/random/summary"
-                );
+    const response = await fetch(
+        "https://en.wikipedia.org/w/api.php?action=query&generator=random&grnnamespace=0&prop=extracts&explaintext=1&format=json&origin=*"
+    );
 
-                const randomPage = await response.json();
+    const data = await response.json();
 
-                let wikiBubble = document.createElement("div");
+    // Extract the random page object
+    const page = Object.values(data.query.pages)[0];
 
-                wikiBubble.style.float = "left";
-                wikiBubble.style.maxWidth = "70%";
-                wikiBubble.style.padding = "5pt";
+    let wikiBubble = document.createElement("div");
 
-                wikiBubble.className =
-                    "w3-container w3-dark-grey w3-round-large w3-left-align";
+    wikiBubble.style.float = "left";
+    wikiBubble.style.maxWidth = "70%";
+    wikiBubble.style.padding = "5pt";
 
-                wikiBubble.innerHTML = `
-                    <h3>${randomPage.title}</h3>
+    wikiBubble.className =
+        "w3-container w3-dark-grey w3-round-large w3-left-align";
 
-                    ${randomPage.extract_html}
+    wikiBubble.innerHTML = `
+        <h3>${page.title}</h3>
 
-                    <br><br>
+        <p>${page.extract}</p>
 
-                    <a
-                        href="${randomPage.content_urls.desktop.page}"
-                        target="_blank"
-                        style="color:lightblue;"
-                    >
-                        Read Full Article
-                    </a>
-                `;
+        <br><br>
 
-                chat.appendChild(wikiBubble);
+        <a
+            href="https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}"
+            target="_blank"
+            style="color:lightblue;"
+        >
+            Read Full Article
+        </a>
+    `;
 
-                let clearAI = document.createElement("div");
+    chat.appendChild(wikiBubble);
 
-                clearAI.style.clear = "both";
-                clearAI.style.width = "100%";
-                clearAI.style.height = "10pt";
+    let clearAI = document.createElement("div");
 
-                chat.appendChild(clearAI);
+    clearAI.style.clear = "both";
+    clearAI.style.width = "100%";
+    clearAI.style.height = "10pt";
 
-                window.scrollTo(0, document.body.scrollHeight);
+    chat.appendChild(clearAI);
 
-                // WAIT 2 SECONDS
-                await new Promise(r => setTimeout(r, 2000));
+    window.scrollTo(0, document.body.scrollHeight);
 
-            } catch (err) {
+    
 
-                addAIMessage("Wikipedia fetch failed.");
+} catch (err) {
 
-                console.error(err);
+    addAIMessage("Wikipedia fetch failed.");
 
-                break;
-            }
+    console.error(err);
+
+    break;
+}
         }
     }
 }
