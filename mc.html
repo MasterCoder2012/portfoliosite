@@ -245,7 +245,6 @@ const searchQuery = input
     // Clean extra spaces
     .replace(/\s+/g, " ")
     .trim();
-        // 1. SEARCH
         const searchResponse = await fetch(
             `https://minecraft.wiki/api.php?action=query&list=search&format=json&srsearch=${encodeURIComponent(searchQuery)}&origin=*`
         );
@@ -262,7 +261,6 @@ const searchQuery = input
             throw new Error("No search results");
         }
 
-        // 2. FETCH PAGE EXTRACT
         const pageResponse = await fetch(
             `https://minecraft.wiki/api.php?action=query&format=json&prop=extracts&exintro=true&explaintext=true&origin=*&titles=${encodeURIComponent(topResult.title)}`
         );
@@ -280,7 +278,6 @@ const searchQuery = input
 
         if (extract) {
 
-            // Shorten massive responses
             if (extract.length > 1000) {
                 extract = extract.slice(0, 1000) + "...";
             }
@@ -364,7 +361,7 @@ const searchQuery = input
                 background-color: aliceblue;"
                 onkeydown="if(event.key==='Enter') submit();">
 
-            <div class="w3-button w3-round-large"
+            <div class="w3-button w3-round-xxlarge"
                 style="background:black ;color:white;"
                 onclick="submit()">
                 <i class="fa-solid fa-arrow-up"></i>
