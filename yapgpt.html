@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
                 const randomPage = await response.json();
             
-                aiMessage.textContent = randomPage.extract;
+                aiMessage.innerHTML = randomPage.extract_html;
             }
             chat.appendChild(aiMessage);
             let clearAI = document.createElement("div");
