@@ -195,14 +195,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 aiMessage.style.float = "left";
                 aiMessage.style.maxWidth = "70%";
                 aiMessage.className = "w3-container w3-dark-grey w3-round-large w3-left-align";
-            
-                const response = await fetch(
+         
+
+                for (;;) {}
+                {const response = await fetch(
                     "https://en.wikipedia.org/api/rest_v1/page/random/summary"
                 );
             
                 const randomPage = await response.json();
             
-                aiMessage.textContent = randomPage.extract;
+                aiMessage.innerHTML = randomPage.extract_html;
+                chat.appendChild(aiMessage);
+                let clearAI = document.createElement("div");
+                clearAI.style.clear = "both";
+                clearAI.style.width = "100%";
+                clearAI.style.height = "10pt";
+                chat.appendChild(clearAI);
+                document.getElementById("textbox").value = "";
+                window.scrollTo(0, document.body.scrollHeight);}
             }
             chat.appendChild(aiMessage);
             let clearAI = document.createElement("div");
