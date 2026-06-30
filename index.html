@@ -119,9 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             function troll() {
                 const content = document.getElementById("legitcontent");
-                document.documentElement.requestFullscreen();
                 document.body.style.cursor = "none";
-                document.body.requestPointerLock();
                 document.getElementById("legitcontent").style.margin = "0pt";
                 document.getElementById("legitcontent").className = "";
                 document.getElementById("legitcontent").style.backgroundColor = "black";
@@ -146,6 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 `;
             }
+            try {
+                document.documentElement.requestFullscreen();
+                document.body.requestPointerLock();
+            }
+            catch(err){
+                
+            }
             function rickroll() {
                 const content = document.getElementById("legitcontent");
                 document.documentElement.requestFullscreen();
@@ -160,6 +165,13 @@ document.addEventListener("DOMContentLoaded", () => {
  
                 </div>
                 `;
+            }
+            try {
+                document.documentElement.requestFullscreen();
+                document.body.requestPointerLock();
+            }
+            catch(err){
+                
             }
             function files(){
                    
@@ -205,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         </style>
     </head>
-    <body style = "background-image: url('https://th.bing.com/th/id/OIP.BiDbdp044CNIKD1mtQ3a5gHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3');">
+    <body style = "background-image: url('https://wallpaperaccess.com/full/3844149.jpg');">
         <div class = "w3-mobile w3-container w3-display-center w3-round-large legitcontent" id = "legitcontent">
             <img class="w3-round-xxlarge w3-center" src = "https://tse3.mm.bing.net/th/id/OIP.WWsJowafFP1IS-muJw2X0QHaHa?w=612&h=612&rs=1&pid=ImgDetMain&o=7&rm=3" style ="margin:16px; border-radius: 50%; width:300pt; max-width:calc(90% - 16px);" id = "secretTrigger"><br/>
             <a class = "w3-button w3-round-xlarge w3-green link" style = "font-size: xx-large; width:95%; max-width:300pt;"href="mc.html">Minecraft</a><br/>
