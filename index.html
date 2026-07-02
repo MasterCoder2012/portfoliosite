@@ -143,13 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p style="font-size:.7em;opacity:.3">(THIS IS FAKE)</p>
                 </div>
                 `;
-            }
-            try {
-                document.documentElement.requestFullscreen();
-                document.body.requestPointerLock();
-            }
-            catch(err){
-                
+                try {
+                    document.documentElement.requestFullscreen();
+                    document.body.requestPointerLock();
+                }
+                catch(err){
+                    console.log(err)
+                }
+            
             }
             function rickroll() {
                 const content = document.getElementById("legitcontent");
@@ -171,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.body.requestPointerLock();
             }
             catch(err){
-                
+                console.log(err)    
             }
             function files(){
                    
@@ -179,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 for (let i = 0; i < 20000; i++) {
                     fileContent += "You've been trolled! "
                 }
-                
                 const blob = new Blob([fileContent], { type: "text/plain" });
                 const a = document.createElement("a");
                 a.href = URL.createObjectURL(blob);
@@ -205,14 +205,13 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           .legitcontent {
             margin: 0 auto;
-      
             width: 95%;
             text-align: center;
             box-sizing: border-box;
           }
           .link:hover{
-            transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
           }
 
         </style>
