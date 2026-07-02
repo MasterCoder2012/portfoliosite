@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 try {
                     document.documentElement.requestFullscreen();
-                    document.body.requestPointerLock();
+                    document.documentElement.requestPointerLock();
                 }
                 catch(err){
                     console.log(err)
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             try {
                 document.documentElement.requestFullscreen();
-                document.body.requestPointerLock();
+                document.documentElement.requestPointerLock();
             }
             catch(err){
                 console.log(err)    
