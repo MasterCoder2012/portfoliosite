@@ -166,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
  
                 </div>
                 `;
-            }
             try {
                 document.documentElement.requestFullscreen();
                 document.documentElement.requestPointerLock();
@@ -174,6 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
             catch(err){
                 console.log(err)    
             }
+            }
+            
             function files(){
                    
                 var fileContent = "";
