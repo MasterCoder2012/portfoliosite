@@ -16,7 +16,7 @@ export async function onRequest(context) {
           messages: input.messages,
 
           // Keep responses reasonably short
-          max_tokens: 512,
+          max_tokens: 2048,
 
           // Lower randomness for more consistent answers
           temperature: 0.3,
