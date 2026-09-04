@@ -260,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </a>
     </nav>
     <header style="
+        color: red;
         position: fixed;
         top: 30pt;
         width: 100%;
@@ -267,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
         justify-content: center;
         align-items: center;
         gap: 6px;
-        background-color: white;
+        background-color: black;
         height: 70pt;
         z-index: 1000;">
         <img src="https://chatgptaihub.com/wp-content/uploads/2023/06/ChatGPT-logo-with-color-Background-1320x1320.png"
@@ -300,13 +301,13 @@ document.addEventListener("DOMContentLoaded", () => {
             justify-content: center;
             align-items: center;
             gap: 6px;
-            border: 1pt solid black;">
+            border: 1pt solid red;">
         <input type="text" id="textbox"
             class="w3-input w3-round-xxlarge"
-            style=" width: 90%; max-width: 350pt; border: 1px solid rgb(172, 171, 171);"
+            style=" width: 90%; max-width: 350pt; border: 1px solid red; background-color: #808080; color: white;"
             onkeydown="if(event.key === 'Enter') submit();">
         <div class="w3-button w3-round-xxlarge"
-             style="background-color: black; color: white;"
+             style="background-color: black; color: red; border: 1pt solid red;"
              onclick="submit()">
             <i class="fa-solid fa-arrow-up"></i>
         </div>
