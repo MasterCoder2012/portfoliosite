@@ -4,7 +4,7 @@ export async function onRequest(context) {
   const input = await request.json();
 
   const response = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/run/@cf/moonshotai/kimi-k2.7-code`,
+    `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/run/@cf/zai-org/glm-4.7-flash`,
     {
       method: "POST",
       headers: {
