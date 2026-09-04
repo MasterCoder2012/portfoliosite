@@ -225,15 +225,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 }),
               });
               
-              const result = await response.json();
-            console.log(result);
+             const result = await response.json();
+
+            console.log("FULL RESPONSE:", result);
             
-            if (result.success && result.result?.choices?.[0]?.message?.content) {
-                aiMessage.textContent = result.result.choices[0].message.content;
+            const choice = result.result?.choices?.[0];
+            const message = choice?.message;
+            
+            if (message?.content) {
+                aiMessage.textContent = message.content;
+            } else if (message?.reasoning_content) {
+                aiMessage.textContent = message.reasoning_content;
+            } else if (message?.reasoning) {
+                aiMessage.textContent = message.reasoning;
             } else {
                 aiMessage.textContent = "Sorry, I couldn't get a response.";
-                console.error("Unexpected API response:", result);
+                console.error("No content:", result);
             }
+
 
             }    
             chat.appendChild(aiMessage);
