@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
               const result = await response.json();
               
               console.log(result);
-                aiMessage.textContent = result;
+                aiMessage.textContent = result.result.response;
             }    
             chat.appendChild(aiMessage);
             let clearAI = document.createElement("div");
