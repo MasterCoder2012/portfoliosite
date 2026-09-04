@@ -9,23 +9,28 @@
     <title>Chatty GPT</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Perplexed AI is an advanced Gemini competitor chatbot by Abhir. It provides intelligent, context-aware responses, assists with questions, and supports interactive conversation.">
+
+    <meta name="description" content="ChattyGPT is an advanced AI chatbot by Abhir. It provides intelligent, context-aware responses and supports interactive conversations.">
+    
     <meta name="author" content="Abhir Rao">
     <meta name="robots" content="index, follow">
     
-    <!-- Fast Google indexing hint -->
+    <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://abhir.top/sitemap.xml">
     
-    <meta property="og:title" content="Perplexed AI – Advanced Chatbot">
-    <meta property="og:description" content="Perplexed AI is an advanced Gemini competitor chatbot by Abhir. It provides intelligent, context-aware responses, assists with questions, and supports interactive conversation.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="ChattyGPT – Advanced AI Chatbot">
+    <meta property="og:description" content="ChattyGPT is an advanced AI chatbot by Abhir, providing intelligent, context-aware responses and interactive conversations.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://abhir.top/Perplexedai.html">
+    <meta property="og:url" content="https://abhir.top/chattygpt.html">
     <meta property="og:image" content="https://abhir.top/favicon.png">
     
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Perplexed AI – Advanced Chatbot">
-    <meta name="twitter:description" content="Perplexed AI is an advanced Gemini competitor chatbot by Abhir. It provides intelligent, context-aware responses, assists with questions, and supports interactive conversation.">
+    <meta name="twitter:title" content="ChattyGPT – Advanced AI Chatbot">
+    <meta name="twitter:description" content="ChattyGPT is an advanced AI chatbot by Abhir, providing intelligent, context-aware responses and interactive conversations.">
     <meta name="twitter:image" content="https://abhir.top/favicon.png">
+
 
     <script>
 /* === EMBED-SAFE COOKIE BANNER + LOGGING === */
@@ -222,8 +227,17 @@ document.addEventListener("DOMContentLoaded", () => {
               
               const result = await response.json();
               
-              console.log(result);
-                aiMessage.textContentresult.result.choices[0].message.content
+              const result = await response.json();
+
+            console.log(result);
+            
+            if (result.success && result.result?.choices?.[0]?.message?.content) {
+                aiMessage.textContent = result.result.choices[0].message.content;
+            } else {
+                aiMessage.textContent = "Sorry, I couldn't get a response.";
+                console.error("Unexpected API response:", result);
+            }
+
             }    
             chat.appendChild(aiMessage);
             let clearAI = document.createElement("div");
@@ -304,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
             border: 1pt solid red;">
         <input type="text" id="textbox"
             class="w3-input w3-round-xxlarge"
-            style=" width: 90%; max-width: 350pt; border: 1px solid red; background-color: #808080; color: white;"
+            style=" width: 90%; max-width: 350pt; border: 1px solid red; background-color: #242424; color: white;"
             onkeydown="if(event.key === 'Enter') submit();">
         <div class="w3-button w3-round-xxlarge"
              style="background-color: black; color: red; border: 1pt solid red;"
