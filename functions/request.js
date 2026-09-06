@@ -4,22 +4,50 @@ export async function onRequest(context) {
   try {
     const input = await request.json();
 
+    if (!Array.isArray(input.messages)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "messages must be an array",
+        }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
+    if (!env.ZAI_API_KEY) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "ZAI_API_KEY is not configured",
+        }),
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/run/@cf/zai-org/glm-4.7-flash`,
+      "https://api.z.ai/api/paas/v4/chat/completions",
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${env.API_TOKEN}`,
+          "Authorization": `Bearer ${env.ZAI_API_KEY}`,
+          "Accept-Language": "en-US,en",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          model: "glm-4.7-flash",
           messages: input.messages,
-
-          // Keep responses reasonably short
+          temperature: 1.0,
           max_tokens: 2048,
-
-          // Lower randomness for more consistent answers
-          temperature: 0.3,
         }),
       }
     );
@@ -37,7 +65,7 @@ export async function onRequest(context) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
       }),
       {
         status: 500,
