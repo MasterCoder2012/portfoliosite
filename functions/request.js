@@ -23,7 +23,7 @@ export async function onRequest(context) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "ZAI_API_KEY is not configured",
+          error: "ZAI_API_KEY is not configured. OOPS",
         }),
         {
           status: 500,
