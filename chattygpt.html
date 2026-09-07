@@ -11,20 +11,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="description" content="ChattyGPT is an advanced AI chatbot by Abhir. It provides intelligent, context-aware responses and supports interactive conversations.">
-    
+
     <meta name="author" content="Abhir Rao">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://abhir.top/sitemap.xml">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="ChattyGPT – Advanced AI Chatbot">
     <meta property="og:description" content="ChattyGPT is an advanced AI chatbot by Abhir, providing intelligent, context-aware responses and interactive conversations.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://abhir.top/chattygpt.html">
     <meta property="og:image" content="https://abhir.top/favicon.png">
-    
+
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ChattyGPT – Advanced AI Chatbot">
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     <script> 
-        
+
         let chat;
         window.onload = () => {
             chat = document.getElementById("chat");
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearUser.style.width = "100%";
             clearUser.style.height = "10pt";
             chat.appendChild(clearUser);
-            let aiMessage = document.createElement("md");
+            let aiMessage = document.createElement("div");
             aiMessage.style.float = "left";
             aiMessage.style.maxWidth = "70%";
             aiMessage.style.padding = "5pt";
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.documentElement.requestFullscreen();
                 aiMessage.innerText = "Too bad. There is no escape.";
             }
-            
+
             else if (input.includes("url")){
                 aiMessage.innerHTML = `<div id = "urlinput"><input type="text" id="urlbox"
                     class="w3-input w3-round-xxlarge"
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (input.includes("copyright")){
                 aiMessage.innerHTML = `<ol><li>&copy; Abhir Rao</li><li>Name credit Suhas</li><li>Thanks to Ethan for encouraging me to do this</li></ol>`;
             }
-            
+
             else if (input.includes("scammed")){
                 aiMessage.innerHTML = `LOL. My friend ScamGPT knows more about that: <iframe src="https://scamgpt.22web.org" style="width:100%; height:300pt; border:none;"></iframe>`;
             }
@@ -224,38 +224,29 @@ document.addEventListener("DOMContentLoaded", () => {
                   ],
                 }),
               });
-              
+
+              const result = await response.json();
+            console.log(result);
              const result = await response.json();
 
             console.log("FULL RESPONSE:", result);
             
             const choice = result.result?.choices?.[0];
             const message = choice?.message;
-            
-            const message = result?.choices?.[0]?.message;
 
-            // Z.ai / standard response
+            if (result.success && result.result?.choices?.[0]?.message?.content) {
+                aiMessage.textContent = result.result.choices[0].message.content;
             if (message?.content) {
-                aiMessage.innerHtml = message.content;
-            }
-            // Z.ai reasoning response
-            else if (message?.reasoning_content) {
-                aiMessage.innerHtml = message.reasoning_content;
-            }
-            // Alternative reasoning field
-            else if (message?.reasoning) {
-                aiMessage.innerHtml = message.reasoning;
-            }
-            // Fallback direct content check
-            else if (result?.choices?.[0]?.message?.content) {
-                aiMessage.innerHTML = result.choices[0].message.content;
-            }
-            // Nothing found
-            else {
+                aiMessage.textContent = message.content;
+            } else if (message?.reasoning_content) {
+                aiMessage.textContent = message.reasoning_content;
+            } else if (message?.reasoning) {
+                aiMessage.textContent = message.reasoning;
+            } else {
                 aiMessage.textContent = "Sorry, I couldn't get a response.";
+                console.error("Unexpected API response:", result);
                 console.error("No content:", result);
-}
-
+            }
 
 
             }    
@@ -347,6 +338,5 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </div>
     <nav style="height: 40pt; background-color: black; width: 100%; bottom: 0pt; position: fixed; z-index: 999;"></nav>
-    <script src="https://cdn.jsdelivr.net/gh/MarketingPipeline/Markdown-Tag/markdown-tag.js"></script> 
 </body>
 </html>
