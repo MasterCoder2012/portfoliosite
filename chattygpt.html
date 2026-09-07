@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.onload = () => {
             chat = document.getElementById("chat");
         };
-
+        let chatHistory = "";
         const unhelpfulAnswers = [
             "Dunno.",
             "I'm Perplexed Beyond Any Reasonable Understanding of This Situation, Honestly.",
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   messages: [
                     {
                       role: "user",
-                      content: input,
+                      content: `You are friendly Chatbot called ChattyGPT. Here is the chat history so far: ${chatHistory}. The user's next prompt is: ${input}`,
                     },
                   ],
                 }),
@@ -235,18 +235,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (result.success && result.result?.choices?.[0]?.message?.content) {
                 aiMessage.textContent = result.result.choices[0].message.content;
-            if (message?.content) {
+                chatHistory = `{$chatHistory} User: ${input}. LLM Reply: ${result.result?.choices?.[0]?.message.content}`;
+            } else if (message?.content) {
                 aiMessage.textContent = message.content;
+                 chatHistory = `${chatHistory} User: ${input}. LLM Reply: ${message.content}`;
             } else if (message?.reasoning_content) {
                 aiMessage.textContent = message.reasoning_content;
+                
             } else if (message?.reasoning) {
                 aiMessage.textContent = message.reasoning;
+                chatHistory = `${chatHistory} User: ${input}. LLM Reply: ${message.reasoning}`;
             } else {
                 aiMessage.textContent = "Sorry, I couldn't get a response.";
                 console.error("Unexpected API response:", result);
                 console.error("No content:", result);
             }
-
 
             }    
             chat.appendChild(aiMessage);
