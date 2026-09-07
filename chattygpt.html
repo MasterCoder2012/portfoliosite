@@ -150,12 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
         async function submit() {
             let input = document.getElementById("textbox").value.trim().toLowerCase();
-            document.getElementById("textbox").value = "";
+            
             let userMessage = document.createElement("div");
             userMessage.style.float = "right";
             userMessage.style.maxWidth = "70%";
             userMessage.className = "w3-container w3-light-grey w3-round-large w3-right-align";
             userMessage.textContent = document.getElementById("textbox").value.trim();
+document.getElementById("textbox").value = "";
             userMessage.style.padding = "5pt";
             chat.appendChild(userMessage);
             let clearUser = document.createElement("div");
@@ -304,7 +305,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <strong style="font-size: xx-large;">Chatty GPT</strong>
     </header>
     <div style = "height: 100pt;"></div>
-    <section id = "chatWrapper">
+    <section id = "chatWrapper" style="
+            width: 95%;
+            max-width: 450pt;
+            margin: auto;
+            
+            
+            ">
     <section id="chat" class="w3-container"
         style="
             width: 95%;
