@@ -1,4 +1,3 @@
-
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -52,16 +51,53 @@ export async function onRequest(context) {
 
       const zaiResult = await zaiResponse.json();
 
+      // ==========================================================
       // Z.ai succeeded
+      // ==========================================================
       if (zaiResponse.ok) {
-        return new Response(
-          JSON.stringify(zaiResult),
-          {
-            status: zaiResponse.status,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+        const zaiMessage = zaiResult?.choices?.[0]?.message;
+
+        /*
+         * Prefer normal content.
+         * If Z.ai only gives us reasoning_content/reasoning,
+         * preserve those as fallbacks.
+         */
+        const content =
+          zaiMessage?.content ||
+          zaiMessage?.reasoning_content ||
+          zaiMessage?.reasoning ||
+          null;
+
+        if (content) {
+          return new Response(
+            JSON.stringify({
+              ...zaiResult,
+
+              // Guarantee a usable OpenAI-compatible message
+              choices: zaiResult.choices?.map((choice, index) => {
+                if (index !== 0) return choice;
+
+                return {
+                  ...choice,
+                  message: {
+                    ...choice.message,
+                    content: content,
+                  },
+                };
+              }),
+            }),
+            {
+              status: zaiResponse.status,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
+
+        console.error(
+          "Z.ai returned no usable content:",
+          JSON.stringify(zaiResult)
         );
       }
 
@@ -87,7 +123,8 @@ export async function onRequest(context) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "Z.ai failed and Cloudflare fallback is not configured",
+          error:
+            "Z.ai failed and Cloudflare fallback is not configured",
         }),
         {
           status: 500,
@@ -121,10 +158,85 @@ export async function onRequest(context) {
 
       const cloudflareResult = await cloudflareResponse.json();
 
+      /*
+       * ==========================================================
+       * Normalize Cloudflare response
+       * ==========================================================
+       *
+       * Cloudflare Workers AI can return:
+       *
+       * {
+       *   result: {
+       *     response: "Hello..."
+       *   }
+       * }
+       *
+       * Your frontend expects:
+       *
+       * {
+       *   choices: [
+       *     {
+       *       message: {
+       *         content: "Hello..."
+       *       }
+       *     }
+       *   ]
+       * }
+       *
+       * So convert it here.
+       */
+
+      if (cloudflareResponse.ok) {
+        const cloudflareContent =
+          cloudflareResult?.result?.response ||
+          cloudflareResult?.result?.content ||
+          cloudflareResult?.response ||
+          cloudflareResult?.content ||
+          null;
+
+        if (cloudflareContent) {
+          return new Response(
+            JSON.stringify({
+              id: cloudflareResult?.result?.id || "cloudflare-fallback",
+              object: "chat.completion",
+              model: "@cf/zai-org/glm-4.7-flash",
+
+              choices: [
+                {
+                  index: 0,
+                  message: {
+                    role: "assistant",
+                    content: cloudflareContent,
+                  },
+                  finish_reason: "stop",
+                },
+              ],
+
+              provider: "cloudflare",
+            }),
+            {
+              status: 200,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
+      }
+
+      console.error(
+        "Cloudflare returned no usable content:",
+        JSON.stringify(cloudflareResult)
+      );
+
       return new Response(
-        JSON.stringify(cloudflareResult),
+        JSON.stringify({
+          success: false,
+          error: "Cloudflare AI returned no usable content",
+          provider_response: cloudflareResult,
+        }),
         {
-          status: cloudflareResponse.status,
+          status: 502,
           headers: {
             "Content-Type": "application/json",
           },
@@ -136,9 +248,10 @@ export async function onRequest(context) {
         JSON.stringify({
           success: false,
           error: "Both AI providers failed",
-          details: cloudflareError instanceof Error
-            ? cloudflareError.message
-            : String(cloudflareError),
+          details:
+            cloudflareError instanceof Error
+              ? cloudflareError.message
+              : String(cloudflareError),
         }),
         {
           status: 502,
@@ -153,9 +266,10 @@ export async function onRequest(context) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error
-          ? error.message
-          : String(error),
+        error:
+          error instanceof Error
+            ? error.message
+            : String(error),
       }),
       {
         status: 500,
@@ -166,4 +280,3 @@ export async function onRequest(context) {
     );
   }
 }
-```
