@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
         async function submit() {
             let input = document.getElementById("textbox").value.trim().toLowerCase();
+            document.getElementById("textbox").value = "";
             let userMessage = document.createElement("div");
             userMessage.style.float = "right";
             userMessage.style.maxWidth = "70%";
@@ -210,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 aiMessage.style.float = "left";
                 aiMessage.style.maxWidth = "70%";
                 aiMessage.className = "w3-container w3-dark-grey w3-round-large w3-left-align";
+                document.getElementById("aiThinking").style.display = "block";
                 const response = await fetch("/request", {
                 method: "POST",
                 headers: {
@@ -250,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Unexpected API response:", result);
                 console.error("No content:", result);
             }
-
+            document.getElementById("aiThinking").style.display = "none";
             }    
             chat.appendChild(aiMessage);
             let clearAI = document.createElement("div");
@@ -258,7 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
             clearAI.style.width = "100%";
             clearAI.style.height = "10pt";
             chat.appendChild(clearAI);
-            document.getElementById("textbox").value = "";
             window.scrollTo(0, document.body.scrollHeight);
         }
         function url() {
@@ -303,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <strong style="font-size: xx-large;">Chatty GPT</strong>
     </header>
     <div style = "height: 100pt;"></div>
+    <section id = "chatWrapper">
     <section id="chat" class="w3-container"
         style="
             width: 95%;
@@ -311,6 +313,43 @@ document.addEventListener("DOMContentLoaded", () => {
             margin-top: 70pt;
             padding-bottom: 160px;
             height: calc(100% - 300px);">
+    </section>
+    <svg id="aiThinking"
+     xmlns="http://www.w3.org/2000/svg"
+     width="70"
+     height="24"
+     viewBox="0 0 70 24"
+     style="display:none;">
+
+        <circle cx="10" cy="12" r="4" fill="#ff0000">
+            <animate attributeName="cy"
+                     values="12;7;12"
+                     dur="0.8s"
+                     repeatCount="indefinite"/>
+        </circle>
+    
+        <circle cx="25" cy="12" r="4" fill="#ff0000">
+            <animate attributeName="cy"
+                     values="12;7;12"
+                     dur="0.8s"
+                     begin="0.15s"
+                     repeatCount="indefinite"/>
+        </circle>
+    
+        <circle cx="40" cy="12" r="4" fill="#ff0000">
+            <animate attributeName="cy"
+                     values="12;7;12"
+                     dur="0.8s"
+                     begin="0.3s"
+                     repeatCount="indefinite"/>
+        </circle>
+    
+        <text x="48" y="16"
+              font-family="Arial, sans-serif"
+              font-size="8"
+              fill="white">AI</text>
+    </svg>
+
     </section>
     <div id="chatbar"
         class="w3-round-xxlarge"
