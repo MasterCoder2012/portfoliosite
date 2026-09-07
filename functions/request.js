@@ -1,4 +1,4 @@
-```javascript
+
 export async function onRequest(context) {
   const { request, env } = context;
 
