@@ -232,16 +232,30 @@ document.addEventListener("DOMContentLoaded", () => {
             const choice = result.result?.choices?.[0];
             const message = choice?.message;
             
+            const message = result?.choices?.[0]?.message;
+
+            // Z.ai / standard response
             if (message?.content) {
-                aiMessage.textContent = message.content;
-            } else if (message?.reasoning_content) {
-                aiMessage.textContent = message.reasoning_content;
-            } else if (message?.reasoning) {
-                aiMessage.textContent = message.reasoning;
-            } else {
+                aiMessage.innerHtml = message.content;
+            }
+            // Z.ai reasoning response
+            else if (message?.reasoning_content) {
+                aiMessage.innerHtml = message.reasoning_content;
+            }
+            // Alternative reasoning field
+            else if (message?.reasoning) {
+                aiMessage.innerHtml = message.reasoning;
+            }
+            // Fallback direct content check
+            else if (result?.choices?.[0]?.message?.content) {
+                aiMessage.innerHTML = result.choices[0].message.content;
+            }
+            // Nothing found
+            else {
                 aiMessage.textContent = "Sorry, I couldn't get a response.";
                 console.error("No content:", result);
-            }
+}
+
 
 
             }    
