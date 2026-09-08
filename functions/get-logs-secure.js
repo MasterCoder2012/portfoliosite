@@ -8,8 +8,8 @@ export async function onRequest(context) {
     const inputPassword = data.password;
 
     // Server-side password check
-    if (inputPassword !== context.env.LOGS_PASSWORD) {
-      return new Response(JSON.stringify({ error: "Unauthorized. LOL. " }), { status: 401 });
+    if (inputPassword == context.env.LOGS_PASSWORD || inputPassword == context.env.SAMRIDH_PASSWORD) {
+      return new Response(JSON.stringify({ error: "Unauthorized. LOL." }), { status: 401 });
     }
 
     // Fetch logs from D1
