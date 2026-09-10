@@ -4,28 +4,30 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
 
 <url>
-  <loc>https://abhir.top/</loc>
-  <lastmod>2026-03-05T18:20:27+00:00</lastmod>
-  <priority>1.00</priority>
+   <loc>https://abhir.top/</loc>
+   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://abhir.top/mc</loc>
-  <lastmod>2026-03-05T18:20:27+00:00</lastmod>
-  <priority>0.80</priority>
+    <loc>https://abhir.top/yapgpt</loc>
+    <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://abhir.top/Perplexedai</loc>
-  <lastmod>2026-03-05T18:20:27+00:00</lastmod>
-  <priority>0.80</priority>
+    <loc>https://abhir.top/chattygpt</loc>
+    <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://abhir.top/passwordmaker</loc>
-  <lastmod>2026-03-05T18:20:27+00:00</lastmod>
-  <priority>0.80</priority>
+   <loc>https://abhir.top/mc</loc>
+   <priority>0.80</priority>
+</url>
+<url>
+   <loc>https://abhir.top/Perplexedai</loc>
+   <priority>0.80</priority>
+</url>
+<url>
+   <loc>https://abhir.top/passwordmaker</loc>
+   <priority>0.80</priority>
 </url>
 
 
