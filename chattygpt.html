@@ -285,13 +285,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "are you dumb?":"No. I'm Perplexed.",
             "hmm":"Hmm What?"
         };
-        const memes = [
-            `<img src = "https://www.boredpanda.com/blog/wp-content/uploads/2024/06/funny-marvel-memes-7-6661b8ab6aabc__700.jpg" style = "width:100%; height:auto;">`,
-            `<img src = "https://i.pinimg.com/originals/74/60/93/746093db1866d4a72bb98a7ee7516dc7.jpg" style = "width:100%; height:auto;">`,
-            `<img src = "https://i.pinimg.com/originals/74/60/93/746093db1866d4a72bb98a7ee7516dc7.jpg" style = "width:100%; height:auto;">`,
-            `<img src = "https://memecentral.org/wp-content/uploads/2019/05/Spider-Man-Meme-what-about-545x545.jpg" style = "width:100%; height:auto;">`,
-            `<img src = "https://tse1.mm.bing.net/th/id/OIP.4nsE1HokcqYBaUbpXe8iRgHaHB?rs=1&pid=ImgDetMain&o=7&rm=3" style = "width:100%; height:auto;">`,            
-        ];
         async function submit() {
             let input = document.getElementById("textbox").value.trim().toLowerCase();
         
@@ -328,65 +321,10 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (input.trim() === "") {
                 aiMessage.textContent = "Please enter a question.";
             }
-            else if (input.includes("news")) {
-                aiMessage.innerHTML = `
-                    <div style="text-align:center; width:100%;">
-                        <h1>Latest News</h1>
-                        <br>
-                        <marquee>
-                            Breaking: Perplexed AI remains perpetually perplexed! Rick Astley gets rickrolled again!
-                        </marquee>
-                        <p>
-                            Rick Astley was Rickrolled by Google v1.(idk) yesterday. today, though, he has been rickrolled by an AI too confused to do anything else.
-                        </p>
-                    </div>`;
-            }
-            else if (
-                input.includes("rickroll") ||
-                input.includes("rick roll") ||
-                input.includes("never gonna give you up")
-            ) {
-                aiMessage.innerHTML = `
-                    <video id="video" align="center" src="rickroll.mp4"
-                        autoplay style="width:100%; height:auto; display:block;">
-                    </video>`;
-            }
-            else if (input.includes("meme")) {
-                aiMessage.innerHTML = memes[Math.floor(Math.random() * memes.length)];
-            }
+           
             else if (input.includes("bye")) {
                 document.documentElement.requestFullscreen();
                 aiMessage.innerText = "Too bad. There is no escape.";
-            }
-            else if (input.includes("url")) {
-                aiMessage.innerHTML = `
-                    <div id="urlinput">
-                        <input type="text" id="urlbox"
-                            class="w3-input w3-round-xxlarge"
-                            style="width: 100%; border: 1px solid rgb(172, 171, 171); padding: 10pt;"
-                            onkeydown="if(event.key === 'Enter') url();">
-        
-                        <div class="w3-button w3-round-large"
-                            style="background-color: black; color: white; width: 100%;"
-                            onclick="url(); document.getElementById('urlinput').remove();">
-                            <i class="fa-solid fa-arrow-up" style="width:100%;"></i>
-                        </div>
-                    </div>`;
-            }
-            else if (input.includes("copyright")) {
-                aiMessage.innerHTML = `
-                    <ol>
-                        <li>&copy; Abhir Rao</li>
-                        <li>Name credit Suhas</li>
-                        <li>Thanks to Ethan for encouraging me to do this</li>
-                    </ol>`;
-            }
-            else if (input.includes("scammed")) {
-                aiMessage.innerHTML = `
-                    LOL. My friend ScamGPT knows more about that:
-                    <iframe src="https://scamgpt.22web.org"
-                        style="width:100%; height:300pt; border:none;">
-                    </iframe>`;
             }
             else {
                 aiMessage.style.float = "left";
@@ -404,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             messages: [
                                 {
                                     role: "user",
-                                    content: `You are friendly Chatbot called ChattyGPT. Here is the chat history so far: ${chatHistory}. The user's next prompt is: ${input}. Feel free to output using markdown`,
+                                    content: `You are friendly Chatbot called ChattyGPT, Made By Abhir. Here is the chat history so far: ${chatHistory}. The user's next prompt is: ${input}. Feel free to output using markdown`,
                                 },
                             ],
                         }),
