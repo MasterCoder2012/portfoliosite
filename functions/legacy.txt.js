@@ -1,7 +1,9 @@
 
 export async function onRequest(context) {
+  const assetUrl = new URL("/legacy.txt", context.request.url);
+
   const response = await context.env.ASSETS.fetch(
-    new Request(new URL("/legacy.txt", context.request.url))
+    new Request(assetUrl, context.request)
   );
 
   if (!response.ok) {
@@ -13,6 +15,7 @@ export async function onRequest(context) {
   return new Response(response.body, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
+      "X-Content-Type-Options": "nosniff",
       "Cache-Control": "no-cache"
     }
   });
