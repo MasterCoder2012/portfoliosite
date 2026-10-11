@@ -1,4 +1,7 @@
-                            For Debra Driza
+export async function onRequest() {
+  const text = `
+
+For Debra Driza
 Because I never would’ve finished this book without your
 steady support, brilliant brainstorming sessions, and tiny
 
@@ -23164,81 +23167,12 @@ bonds. “Maybe you should figure that out.”
    He flipped his hood up over his head, covering his face.
    Time to go.
    Don’t let them break you.
-More from this Series
-
-Keeper of the Lost…   Exile
-Book 1                 Book 2
-
-Everblaze              Neverseen
-Book 3                 Book 4
-
-Lodestar               Nightfall
-Book 5                 Book 6
-         ABOUT THE AUTHOR
-
-                         COPYRIGHT  2012 BY DEVENDE PHOTOGRAPHY
-
-SHANNON MESSENGER graduated from the USC School of
-
-Cinematic Arts, where she learned—among other things—that she
-liked watching movies much better than making them. She’s studied
-art, screenwriting, and film production, but she realized her real
-passion was writing stories for children. She’s the New York Times and
-USA Today bestselling author of the award-winning middle grade
-series Keeper of the Lost Cities, as well as the Sky Fall series for young
-adults. Her books have been featured on multiple state reading lists,
-published in numerous countries, and translated into many different
-languages. She lives in Southern California with an embarrassing
-number of cats. Find her online at ShannonMessenger.com.
-
-                                       KEEPEROFTHELOSTCITIES.COM
-                                                         Aladdin
-
-                                         Simon & Schuster, New York
-               Visit us at simonandschuster.com/kids
-www.SimonandSchuster.com/Authors/Shannon-Messenger
-     Also by Shannon Messenger
-
-The KEEPER OF THE LOST CITIES Series
-        Keeper of the Lost Cities
-                    Exile
-                 Everblaze
-                 Neverseen
-                  Lodestar
-                  Nightfall
-                 Flashback
-
-          The SKY FALL Series
-              Let the Sky Fall
-
-           Let the Storm Break
-            Let the Wind Rise
- This book is a work of fiction. Any references to historical events, real people, or real places
-are used fictitiously. Other names, characters, places, and events are products of the author’s
-
-   imagination, and any resemblance to actual events or places or persons, living or dead, is
-                                                entirely coincidental.
-
-                    An imprint of Simon & Schuster Children’s Publishing Division
-                            1230 Avenue of the Americas, New York, NY 10020
-                                           www.SimonandSchuster.com
-                              First Aladdin hardcover edition November 2019
-                                Text copyright  2019 by Shannon Messenger
-                            Jacket illustration copyright  2019 by Jason Chan
-
-    All rights reserved, including the right of reproduction in whole or in part in any form.
-         ALADDIN and related logo are registered trademarks of Simon & Schuster, Inc.
-             For information about special discounts for bulk purchases, please contact
-
-    Simon & Schuster Special Sales at 1-866-506-1949 or business@simonandschuster.com.
-           The Simon & Schuster Speakers Bureau can bring authors to your live event.
-
-For more information or to book an event contact the Simon & Schuster Speakers Bureau at 1-
-                     866-248-3049 or visit our website at www.simonspeakers.com.
-                                       Jacket designed by Karin Paprocki
-                                      Interior designed by Mike Rosamilia
-
-                Full CIP data for this book is available from the Library of Congress.
-                                           ISBN 978-1-5344-2733-4 (hc)
-
-                                         ISBN 978-1-5344-2735-8 (eBook)
+`
+   return new Response(text, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Content-Type-Options": "nosniff",
+      "Cache-Control": "no-cache"
+    }
+  });
+}
